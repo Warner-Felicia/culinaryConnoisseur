@@ -1,4 +1,4 @@
 exports.getIndex = (req, res, next) => {
-    console.log('working');
+    // console.log('working');
 };
 
