@@ -1,4 +1,7 @@
 exports.getIndex = (req, res, next) => {
-    // console.log('working');
+    res.render('index', {
+        pageTitle: 'Culinary Connoisseur Home',
+        path: '/auth/login'
+    });
 };
 
