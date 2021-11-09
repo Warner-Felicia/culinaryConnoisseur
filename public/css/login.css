@@ -193,6 +193,7 @@ input {
 	left: 0;
 	width: 50%;
 	z-index: 2;
+	color: black;
 }
 
 .container.right-panel-active .sign-in-container {
@@ -204,6 +205,7 @@ input {
 	width: 50%;
 	opacity: 0;
 	z-index: 1;
+	color: black;
 }
 
 .container.right-panel-active .sign-up-container {
@@ -399,4 +401,9 @@ footer {
 
 .product__description {
     text-align: center;
+}
+
+
+.passwordToggle{
+	cursor: pointer;
 }
