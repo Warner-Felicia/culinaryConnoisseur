@@ -6,4 +6,10 @@ const shopController = require('../controllers/shop');
 
 router.get('/', shopController.getIndex);
 
+router.post('/', shopController.postIndex);
+
+router.get('/signInUp', shopController.getLogin);
+
+router.post('/signInUp', shopController.postLogin);
+
 module.exports = router;
