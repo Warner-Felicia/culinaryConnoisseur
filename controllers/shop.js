@@ -1,7 +1,13 @@
 exports.getIndex = (req, res, next) => {
-    res.render('index', {
+    res.render('home', {
         pageTitle: 'Culinary Connoisseur Home',
-        path: '/auth/login'
+        path: '/'
     });
 };
 
+exports.postIndex = (req, res, next) => {
+    res.render('home', {
+        pageTitle: 'Culinary Connoisseur Home',
+        path: '/'
+    });
+};
