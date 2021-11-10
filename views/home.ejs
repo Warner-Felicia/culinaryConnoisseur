@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/slideshow.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<header>
+    <button id="side-menu-toggle">Menu</button>
+    <div class="nav_container">
+      <nav class="main-header_nav">
+        <ul>
+            <a href="#home"><img src="../images/CulinaryLogo.png" alt="logo" class="logo"></a>
+            <li><a action="/signInUp" href="/signInUp">Login</a></li>
+            <li><a href="#">All Recipes</a></li>
+            <li><a href="#">User's Recipes</a></li>
+            <li><a href="#">Favorite Recipes</a></li>
+            <li><a href="#">Edit Recipe</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<body>
+    <main>
+        <h1>Culinary Connoisseur</h1>
+        <div class="recipe-slider">
+
+            <div class="mySlides fade">
+                <img src="https://cdn.pixabay.com/photo/2020/02/02/15/07/meat-4813261_960_720.jpg"
+                    alt="Rosemary Pork Chops">
+                <div class="text">Rosemary Pork Chops</div>
+            </div>
+
+            <div class="mySlides fade">
+                <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_960_720.jpg"
+                    alt="Classic Hamburger">
+                <div class="text">Classic Hamburger</div>
+            </div>
+
+            <div class="mySlides fade">
+                <img src="https://cdn.pixabay.com/photo/2017/12/10/14/47/pizza-3010062_960_720.jpg"
+                    alt="Margherita Pizza">
+                <div class="text">Margherita Pizza</div>
+            </div>
+
+            <div class="mySlides fade">
+                <img src="https://cdn.pixabay.com/photo/2014/08/14/14/21/shish-kebab-417994_960_720.jpg"
+                    alt="Shish Kebobs">
+                <div class="text">Shish Kebobs</div>
+            </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <!-- The dots/circles -->
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
+        <h2>Collect your recipes online and share them with friends</h2>
+        <h2>It's Easy as 1, 2, 3</h2>
+        <!-- <div class="card">
+            <p><a href='#'>Browse</a> our collection of recipes and save any you would like to try</p>
+        </div>
+        <div class="card">
+            <p><a href='#'>Create</a> a list of favorites that you want to come back to</p>
+        </div>
+        <div class="card">
+            <p><a href='#'>Add</a> your own so others can find new favorites too</p>
+        </div> -->
+
+
+
+        <div class="grid">
+            <a href="#"><article class="card product-item">
+                <header class="card__header">
+                    <h1 class="product__title">Browse</h1>
+                </header>
+                <div class="card__content">
+                    <p class="product__description"> our collection of recipes and save any you would like to try</p>
+                </div>
+            </a></article>
+            <a href="#"><article class="card product-item">
+                <header class="card__header">
+                    <h1 class="product__title">Create</h1>
+                </header>
+                <div class="card__content">
+                    <p class="product__description"> a list of favorites that you want to come back to</p>
+                </div>
+            </a></article>
+            <a href="#"><article class="card product-item">
+                <header class="card__header">
+                    <h1 class="product__title">Add</h1>
+                </header>
+                <div class="card__content">
+                    <p class="product__description"> your own so others can find new favorites too</p>
+                </div>
+            </a></article>
+        </div>
+
+
+
+
+
+
+
+       
+    </main>
+    <script src='/js/slideshow.js'></script>
+</body>
+
+</html>
