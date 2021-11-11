@@ -11,19 +11,11 @@ const errorController = require('./controllers/error');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-<<<<<<< HEAD
 const authRoutes = require('./routes/auth');
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
-=======
-// const authRoutes = require('./routes/auth');
-
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
-// app.use(authRoutes);
->>>>>>> main
 
 app.use(express.static(path.join(__dirname, 'public')));
 
