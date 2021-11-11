@@ -11,3 +11,10 @@ exports.getReset = (req, res, next) => {
         path: '/auth/reset'
     });
 };
+
+exports.getPreferences = (req, res, next) => {
+    res.render('auth/preferences',{
+        pageTitle: 'Preferences',
+        path: '/auth/preferences'
+    });
+}
