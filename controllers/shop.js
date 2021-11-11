@@ -11,4 +11,7 @@ exports.postIndex = (req, res, next) => {
         path: '/'
     });
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
