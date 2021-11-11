@@ -1,6 +1,6 @@
 exports.getLogin = (req, res, next) => {
-    res.render('login', {
+    res.render('auth/login', {
         pageTitle: 'Log In',
-        path: '/login'
+        path: '/auth/login'
     });
 };
