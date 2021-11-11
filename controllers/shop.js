@@ -5,3 +5,9 @@ exports.getIndex = (req, res, next) => {
     });
 };
 
+exports.postIndex = (req, res, next) => {
+    res.render('home', {
+        pageTitle: 'Culinary Connoisseur Home',
+        path: '/'
+    });
+};
