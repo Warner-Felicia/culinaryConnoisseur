@@ -14,11 +14,13 @@
       <nav class="main-header_nav">
         <ul>
             <a action="/home" href="/"><img src="../images/CulinaryLogo.png" alt="LOGO" class="logo"></a>
-            <li><a action="/signInUp" class="active" href="/signInUp">Login</a></li>
             <li><a href="#">All Recipes</a></li>
             <li><a href="#">User's Recipes</a></li>
             <li><a href="#">Favorite Recipes</a></li>
             <li><a href="#">Edit Recipe</a></li>
+            <li><a action="/signInUp" class="active" href="/signInUp">Login</a></li>
+            <li><a action="/preferences" class="active"href="/preferences">Preferences</a></li>
+
         </ul>
       </nav>
     </div>
@@ -31,7 +33,8 @@
     <div class="form-container sign-up-container">
       <form action="#">
         <h1>Create Account</h1>
-        <input type="text" placeholder="Name" />
+        <input type="text" placeholder="First Name" />
+        <input type="text" placeholder="last Name" />
         <input type="email" placeholder="Email" />
         <input type="password" placeholder="Password" />
         <button>Sign Up</button>
@@ -45,7 +48,6 @@
         <input type="password" id='password' name="password" placeholder="Password" />
         <div class='passwordToggle'>Show Password</div><br>
         <a style="font-size: 15px;" href="#">Forgot your password?</a>
-        
         <button class="button" onclick="window.location.href='UserProfileInfo.html'">Sign In</button>
       </form>
     </div>
