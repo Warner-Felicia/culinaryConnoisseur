@@ -11,17 +11,3 @@ exports.postIndex = (req, res, next) => {
         path: '/'
     });
 };
-
-exports.getLogin = (req, res, next) => {
-    res.render('signInUp', {
-        pageTitle: 'Login',
-        path: '/signInUp'
-    });
-};
-
-exports.postLogin = (req, res, next) => {
-    res.render('signInUp', {
-        pageTitle: 'Login',
-        path: '/signInUp'
-    });
-};
