@@ -8,4 +8,8 @@ router.get('/', shopController.getIndex);
 
 router.post('/', shopController.postIndex);
 
+router.get('/recipes', shopController.getRecipes);
+
+router.get('/recipe/:recipeId', shopController.getRecipe);
+
 module.exports = router;
