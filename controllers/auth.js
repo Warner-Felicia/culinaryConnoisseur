@@ -17,4 +17,4 @@ exports.getPreferences = (req, res, next) => {
         pageTitle: 'Preferences',
         path: '/auth/preferences'
     });
-}
+};
