@@ -160,6 +160,8 @@ form {
 	padding: 0 50px;
 	height: 100%;
 	text-align: center;
+	color:rgb(129, 118, 19);
+	border-radius: 11px;
 }
 
 input {

@@ -37,6 +37,7 @@ exports.getReset = (req, res, next) => {
     });
 };
 
+
 exports.postUpdatePreferences = (req, res, next) => {
     const updatedEmail = req.body.email;
     const updatedFirstName = req.body.firstName;
@@ -69,4 +70,11 @@ exports.postDeleteUser = (req, res, next) => {
         res.redirect('/');
     })
     .catch(err => console.log(err));
+
+exports.getPreferences = (req, res, next) => {
+    res.render('auth/preferences',{
+        pageTitle: 'Preferences',
+        path: '/auth/preferences'
+    });
+
 };

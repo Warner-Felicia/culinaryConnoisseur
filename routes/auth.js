@@ -8,6 +8,8 @@ router.get('/signInUp', authController.getSignInUp);
 
 router.post('/signUp', authController.postSignUp);
 
+router.get('/preferences', authController.getPreferences);
+
 router.get('/reset', authController.getReset);
 
 router.post('/updatePreferences', authController.postUpdatePreferences);
