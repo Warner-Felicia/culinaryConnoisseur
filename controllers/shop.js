@@ -1,4 +1,8 @@
+
+const User = require('../models/user');
+
 const Recipe = require('../models/recipe');
+
 
 exports.getIndex = (req, res, next) => {
     res.render('home', {
@@ -14,6 +18,25 @@ exports.postIndex = (req, res, next) => {
     });
 };
 
+
+exports.postAddFavorite = (req, res, next) => {
+    const recipeId = req.body.recipeId;
+    //**TO-DO replace dummy user with session user */
+    User.findById('618dceb783540affde17a5a9')
+    .then(user => {
+        user.addFavorite(recipeId);
+    })
+    .catch(err => console.log(err));
+    
+};
+
+exports.postDeleteFavorite = (req, res, next) => {
+    const recipeId = req.body.recipeId;
+    //**TO-DO replace dummy user with session user */
+    User.findById('618dceb783540affde17a5a9')
+    .then(user => {
+        user.deleteFavorite(recipeId);
+
 exports.getRecipes = (req, res, next) => {
     Recipe.find()
         .then(recipes => {
@@ -27,6 +50,7 @@ exports.getRecipe = (req,res, next) => {
     Recipe.findById(recipeId)
     .then(recipe => {
         //**TO-DO what to do when recipe is returned*/
+
     })
     .catch(err => console.log(err));
 };
