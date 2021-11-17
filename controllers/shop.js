@@ -36,6 +36,8 @@ exports.postDeleteFavorite = (req, res, next) => {
     User.findById('618dceb783540affde17a5a9')
     .then(user => {
         user.deleteFavorite(recipeId);
+    })
+};
 
 exports.getRecipes = (req, res, next) => {
     Recipe.find()

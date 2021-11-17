@@ -9,8 +9,6 @@ const connectionString = process.env.DATABASE_CONNECTION_STRING;
 
 const app = express();
 
-
-**TO-DO replace json with urlencoded once frontend is connected */
 app.use(bodyParser.urlencoded({
    extended: false
  }));
@@ -37,5 +35,4 @@ mongoose.connect(connectionString)
     .then(result => {
         app.listen(3000);
     })
-   .catch(err => console.log(err));
    .catch(err => console.log(err));
