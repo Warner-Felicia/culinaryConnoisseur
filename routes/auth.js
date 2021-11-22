@@ -6,6 +6,8 @@ const authController = require('../controllers/auth');
 
 router.get('/signInUp', authController.getSignInUp);
 
+router.post('/signIn', authController.postLogIn);
+
 router.post('/signUp', authController.postSignUp);
 
 router.get('/preferences', authController.getPreferences);
