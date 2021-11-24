@@ -13,13 +13,14 @@
     <div class="nav_container">
       <nav class="main-header_nav">
         <ul>
-            <a action="/home" href="/"><img src="../images/CulinaryLogo.png" alt="LOGO" class="logo"></a>
+            <a action="/home" href="/"><img src="/images/CulinaryLogo.png" alt="LOGO" class="logo"></a>
+            <li><a action="/signInUp" class="active" href="/signInUp">Login</a></li>
             <li><a href="#">All Recipes</a></li>
             <li><a href="#">User's Recipes</a></li>
             <li><a href="#">Favorite Recipes</a></li>
             <li><a href="#">Edit Recipe</a></li>
-            <li><a action="/signInUp" class="active" href="/signInUp">Login</a></li>
-            <li><a action="/preferences" class="active"href="/preferences">Preferences</a></li>
+            
+            <li><a action="/preferences" href="/preferences">Preferences</a></li>
 
         </ul>
       </nav>
@@ -47,13 +48,9 @@
         <input name="email" type="email" placeholder="Email" />
         <input name="password" type="password" id='password' name="password" placeholder="Password" />
         <div class='passwordToggle'>Show Password</div><br>
-<<<<<<< Updated upstream
         <a style="font-size: 15px;" href="#">Forgot your password?</a>
-        <button class="button" onclick="window.location.href='UserProfileInfo.html'">Sign In</button>
-=======
         <a style="font-size: 15px;" action="/reset" href="/reset">Forgot your password?</a>
         <button class="button">Sign In</button>
->>>>>>> Stashed changes
       </form>
     </div>
     <!-- sign up portion -->
