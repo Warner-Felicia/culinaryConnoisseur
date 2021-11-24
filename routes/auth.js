@@ -4,6 +4,18 @@ const router = express.Router();
 
 const authController = require('../controllers/auth');
 
-router.get('/login', authController.getLogin);
+router.get('/signInUp', authController.getSignInUp);
+
+router.post('/signIn', authController.postLogIn);
+
+router.post('/signUp', authController.postSignUp);
+
+router.get('/preferences', authController.getPreferences);
+
+router.get('/reset', authController.getReset);
+
+router.post('/updatePreferences', authController.postUpdatePreferences);
+
+router.post('/deleteUser', authController.postDeleteUser);
 
 module.exports = router;

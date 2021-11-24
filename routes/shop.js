@@ -8,8 +8,14 @@ router.get('/', shopController.getIndex);
 
 router.post('/', shopController.postIndex);
 
-router.get('/signInUp', shopController.getLogin);
 
-router.post('/signInUp', shopController.postLogin);
+router.post('/addFavorite', shopController.postAddFavorite);
+
+router.post('/deleteFavorite', shopController.postDeleteFavorite);
+
+router.get('/recipes', shopController.getRecipes);
+
+router.get('/recipe/:recipeId', shopController.getRecipe);
+
 
 module.exports = router;

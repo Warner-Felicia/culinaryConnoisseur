@@ -4,43 +4,12 @@ const router = express.Router();
 
 const adminController = require('../controllers/admin');
 
-router.get('/add-product', isAuth, adminController.getAddProduct); router.post(
-  '/add-product',
-  // [
-  //   // body('title')
-  //   //   .isString()
-  //   //   .isLength({ min: 3 })
-  //   //   .trim(),
-  //   // body('description')
-  //   //   .isLength({ min: 5, max: 400 })
-  //   //   .trim(),
-  //   // body('rating')
-  //   //   .isNumeric(),
-  //   // body('price').isFloat()
-  // ],
-  // isAuth,
-  adminController.postAddProduct
-);
+router.post('/addRecipe', adminController.postAddRecipe);
 
-router.get('/edit-product/:productID', isAuth, adminController.getEditProduct);
-router.post(
-  '/edit-product',
-  // [
-  //   // body('title')
-  //   //   .isString()
-  //   //   .isLength({ min: 3 })
-  //   //   .trim(),
-  //   //   body('description')
-  //   //     .isLength({ min: 5, max: 400 })
-  //   //     .trim(),
-  //   //   body('rating')
-  //   //     .isNumeric(),
-  //   // body('price').isFloat()
-  // ],
-  // isAuth,
-  adminController.postEditProduct
-);
+router.get('/editRecipe/:recipeId', adminController.getEditRecipe);
 
-router.post('/delete-product', isAuth, adminController.postDeleteProduct);
+router.post('/editRecipe', adminController.postEditRecipe);
+
+router.post('/deleteProduct', adminController.postDeleteProduct);
 
 module.exports = router;

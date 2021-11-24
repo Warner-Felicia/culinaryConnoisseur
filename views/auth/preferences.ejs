@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culinary Connoisseur</title>
+    <link href="/css/preferences.css" rel="stylesheet" type="text/css">
+</head>
+
+<header>
+    <button id="side-menu-toggle">Menu</button>
+    <div class="nav_container">
+      <nav class="main-header_nav">
+        <ul>
+            <a action="/home" href="/"><img src="../images/CulinaryLogo.png" alt="LOGO" class="logo"></a>
+            <li><a href="#">All Recipes</a></li>
+            <li><a href="#">User's Recipes</a></li>
+            <li><a href="#">Favorite Recipes</a></li>
+            <li><a href="#">Edit Recipe</a></li>
+            <li><a action="/signInUp" href="/signInUp">Login</a></li>
+            <li><a action="/auth/preferences" class="active">Preferences</a></li>
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<body>
+    <br>
+    <!-- sign in portion -->
+  <div class="container" id="container">
+    <form action="">
+     <h1 class="black-font">Preferences</h1>
+       <div>
+              <label class="black-font" for="firstname">First Name</label>
+              <input type="firstname" name="firstname" id="firstname" placeholder="">
+              <label class="black-font" for="lastname">Last Name</label>
+              <input type="lastname" name="lastname" id="lastname" placeholder="">
+              <label class="black-font" for="email">Email</label>
+              <input type="email" name="email" id="email" placeholder="Email">
+              <label class="black-font" for="newPassword">New Password</label>
+              <input type="password" name="newPassword" id="newPassword" placeholder="New Password">
+
+       </div>
+   </form>
+  </div>
+
+  <footer>Culinary Connoisseur</footer>
+  <script src='/js/login.js'></script>
+</body>
+</html>
