@@ -51,8 +51,11 @@ exports.getRecipe = (req,res, next) => {
     const recipeId = req.params.recipeId;
     Recipe.findById(recipeId)
     .then(recipe => {
-        //**TO-DO what to do when recipe is returned*/
-
+      res.render('recipes/recipe-detail', {
+        recipe: recipe,
+        title: recipe.title,
+        path: '/recipes'
+      });
     })
     .catch(err => console.log(err));
 };

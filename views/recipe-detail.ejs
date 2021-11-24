@@ -48,7 +48,7 @@
         </div>
         <!-- TODO: If recipe.userId == currentUser._id, allow edit/delete -->
         <div class=" card__actions">
-              <a href="/recipe-edit/<%= recipe._id %>?edit=true" class="btn">Edit</a>
+              <a href="/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
               <form action="/recipe-delete" method="POST">
                 <input type="hidden" value="<%= recipe._id %>" name="recipeId">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
