@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-exports.getLogin = (req, res, next) => {
-=======
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
@@ -13,8 +10,6 @@ exports.getSignInUp = (req, res, next) => {
     });
 };
 
-<<<<<<< Updated upstream
-=======
 exports.postSignUp = (req, res, next) => {
     const email = req.body.email;
     const firstName = req.body.firstName;
@@ -62,9 +57,6 @@ console.log(req.body.email);
         .catch(err => console.log(err));
 };
 
-
-
->>>>>>> Stashed changes
 exports.getReset = (req, res, next) => {
     res.render('auth/passwordReset',{
         pageTitle: 'Password Reset',
