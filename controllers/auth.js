@@ -47,7 +47,7 @@ console.log(req.body.email);
                 return res.redirect('/signInUp');
             }
             if (bcrypt.compareSync(password, user.password)) {
-                console.log("Login worked")
+                console.log("Login worked");
                 return res.redirect('/');
             }
             console.log('Login failed');
@@ -57,10 +57,40 @@ console.log(req.body.email);
 };
 
 exports.getReset = (req, res, next) => {
-    res.render('auth/passwordReset', {
+        res.render('auth/passwordReset', {
         pageTitle: 'Password Reset',
-        path: '/auth/reset'
+        path: '/auth/reset',
+        hint: false
     });
+};
+
+exports.postShowHint = (req, res, next) => {
+    const email = req.body.email;
+    User.find({ email: email })
+    .then(user => {
+        res.render('auth/passwordReset', {
+            pageTitle: 'Password Reset',
+            path: '/auth/reset',
+            hint: true,
+            user: user[0]
+        });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postReset = (req, res, next) => {
+    const email = req.body.email;
+    const securityPhrase = req.body.securityPhrase;
+    User.findOne({ email: email })
+    .then(user => {
+        if(user.securityPhrase !== securityPhrase) {
+            res.redirect('/reset');
+        } else {
+            res.redirect('/preferences');
+        }
+        
+    })
+    .catch(err => console.log(err));
 };
 
 exports.postUpdatePreferences = (req, res, next) => {
@@ -95,7 +125,7 @@ exports.postDeleteUser = (req, res, next) => {
         res.redirect('/');
     })
     .catch(err => console.log(err));
-}
+};
 
 exports.getPreferences = (req, res, next) => {
     res.render('auth/preferences',{
