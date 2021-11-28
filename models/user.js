@@ -22,7 +22,15 @@ const userSchema = new Schema({
 
     password: {
         type: String,
-        required: true,
+        required: true
+    },
+    securityPhrase: {
+        type: String,
+        required: true
+    },
+    passwordHint: {
+        type: String,
+        required: true
     },
     favorites: {
         type: [{recipeId: String}]

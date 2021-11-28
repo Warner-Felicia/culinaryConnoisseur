@@ -14,6 +14,10 @@ router.get('/preferences', authController.getPreferences);
 
 router.get('/reset', authController.getReset);
 
+router.post('/hint', authController.postShowHint);
+
+router.post('/reset', authController.postReset);
+
 router.post('/updatePreferences', authController.postUpdatePreferences);
 
 router.post('/deleteUser', authController.postDeleteUser);
