@@ -57,6 +57,8 @@ userSchema.methods.createUser = function(user) {
     this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.password = user.password;
+    this.securityPhrase = user.securityPhrase;
+    this.passwordHint = user.passwordHint;
     this.favorites = [];
     return this.save();
 };

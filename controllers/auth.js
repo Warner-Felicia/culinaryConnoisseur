@@ -14,6 +14,8 @@ exports.postSignUp = (req, res, next) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const password = req.body.password;
+    const securityPhrase = req.body.securityPhrase;
+    const passwordHint = req.body.passwordHint;
     let userName = req.body.userName;
     if (!userName) {
         userName = email.split('@')[0];
@@ -23,7 +25,9 @@ exports.postSignUp = (req, res, next) => {
         firstName: firstName,
         lastName: lastName,
         password: bcrypt.hashSync(password, 10),
-        userName: userName
+        userName: userName,
+        securityPhrase: securityPhrase,
+        passwordHint: passwordHint
     });
     user.save()
         .then(result => {
