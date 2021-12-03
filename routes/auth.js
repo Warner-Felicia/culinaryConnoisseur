@@ -18,7 +18,11 @@ router.post('/hint', authController.postShowHint);
 
 router.post('/reset', authController.postReset);
 
-router.post('/updatePreferences', authController.postUpdatePreferences);
+router.post('/updateNames', authController.postUpdateNames);
+
+router.post('/updatePassword', authController.postUpdatePassword);
+
+router.post('/updateSecurityPhrase', authController.postUpdateSecurityPhrase);
 
 router.post('/deleteUser', authController.postDeleteUser);
 

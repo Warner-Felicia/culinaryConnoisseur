@@ -70,4 +70,11 @@ userSchema.methods.editUser = function(user) {
     return this.save();
 };
 
+userSchema.methods.editNames = function(user) {
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.email = user.email;
+    return this.save();
+};
+
 module.exports = mongoose.model('User', userSchema);

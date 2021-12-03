@@ -5,10 +5,14 @@ const Recipe = require('../models/recipe');
 
 
 exports.getIndex = (req, res, next) => {
-    res.render('home', {
-        pageTitle: 'Culinary Connoisseur Home',
-        path: '/'
-    });
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
+     res.render('home', {
+                pageTitle: 'Culinary Connoisseur Home',
+                path: '/'
+    }); 
+    
 };
 
 exports.postIndex = (req, res, next) => {
