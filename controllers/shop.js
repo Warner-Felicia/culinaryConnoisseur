@@ -46,7 +46,11 @@ exports.postDeleteFavorite = (req, res, next) => {
 exports.getRecipes = (req, res, next) => {
     Recipe.find()
         .then(recipes => {
-            //**TO-DO what to one once all recipes have been returned from the database */
+            res.render('shop/recipeList', {
+                pageTitle: 'Recipes',
+                path: '/recipe',
+                recipes: recipes
+            });
         })
         .catch(err => console.log(err));
 };
@@ -55,7 +59,14 @@ exports.getRecipe = (req,res, next) => {
     const recipeId = req.params.recipeId;
     Recipe.findById(recipeId)
     .then(recipe => {
-        //**TO-DO what to do when recipe is returned*/
+        if(!recipe) {
+            //**TO-DO route to error handling */
+        }
+        res.render('shop/recipeDetails', {
+            pageTitle: recipe.title,
+            path: '/recipeDetails',
+            recipe: recipe
+        });
 
     })
     .catch(err => console.log(err));

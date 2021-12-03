@@ -70,6 +70,7 @@ exports.postAddRecipe = (req, res, next) => {
     const userId = req.body.userId;
     const ingredients = [];
     const tagsArray = tags.split(' ');
+    console.log(ingredientQuantities);
 
     //colating ingredientQuantities and ingredientNames
     for (let i = 0; i < ingredientQuantities.length; i++) {
