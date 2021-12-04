@@ -34,10 +34,10 @@
     <div class="grid">
       <% recipes.forEach(recipe => { %>
         <article class="card product-item">
-          <header class="card__header">
-            <a class="card" href='/recipe/<%=recipe._id%>'>
+          <a class="card" href='/recipe/<%=recipe._id%>'>
+            <header class="card__header">
               <h2 class="card_content"><%= recipe.title %></h2>
-          </header>
+            </header>
               <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
               <% if (recipe.time) { %>
               <h2>Time: <%= recipe.time %></h2>
