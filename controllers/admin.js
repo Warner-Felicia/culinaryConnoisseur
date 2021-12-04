@@ -71,8 +71,7 @@ exports.postEditRecipe = (req, res, next) => {
 
 exports.postAddRecipe = (req, res, next) => {
     const title = req.body.title;
-    const ingredientQuantities = req.body.ingredientQuantity;
-    const ingredientNames = req.body.ingredientName;
+    const ingredients = req.body.ingredients;
     const directions = req.body.directions;
     const time = req.body.time;
     const servings = req.body.servings;
@@ -80,20 +79,8 @@ exports.postAddRecipe = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const note = req.body.note;
     const tags = req.body.tags;
-    //**TO-DO replace userId with session user id */
     const userId = req.body.userId;
-    const ingredients = [];
-    const tagsArray = tags.split(' ');
-    console.log(ingredientQuantities);
-
-  //colating ingredientQuantities and ingredientNames
-  for (let i = 0; i < ingredientQuantities.length; i++) {
-    const ingredient = {
-      quantity: ingredientQuantities[i],
-      name: ingredientNames[i]
-    };
-    ingredients.push(ingredient);
-  }
+    const tagsArray = tags ? tags.split(', ') : undefined;
 
   const recipe = new Recipe({
     title: title,
@@ -108,6 +95,7 @@ exports.postAddRecipe = (req, res, next) => {
   });
   recipe.save()
     .then(result => {
+      console.log("Successfully saved recipe!");
       res.render('recipes/recipe-detail', {
         recipe: recipe,
         title: recipe.title,
@@ -129,12 +117,14 @@ module.exports.postDeleteRecipe = (req, res, nex) => {
 };
 
 exports.getAddRecipe = (req, res, next) => {
+  const userId = req.session.userId;
   res.render('admin/edit-recipe', {
     title: 'Add a Recipe',
     path: '/admin/add-recipe',
     editing: false,
-    hadError: false,
+    hasError: false,
     errorMessage: null,
-    validationErrors: []
+    validationErrors: [],
+    userId: userId
   });
 };

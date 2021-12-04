@@ -6,18 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
   <title>
-    <% Edit recipe.title %>
+    <% if (editing) { recipe.title } else { %>Add Recipe<% } %>
   </title>
 </head>
 
 <body>
-   <%- include('../includes/navigation.ejs') %>
+   <%- include('../includes/nav.ejs') %>
 
     <main>
         <% if (errorMessage) { %>
             <div class="user-message user-message--error"><%= errorMessage %></div>
         <% } %>
-        <form class="recipe-form" action="/<% if (editing) { %>edit-recipe<% } else { %>add-recipe<% } %>" method="POST">
+        <form class="recipe-form" action="/<% if (editing) { %>admin/edit-recipe<% } else { %>admin/add-recipe<% } %>" method="POST">
             <div class="form-control">
                 <label for="title">Recipe Title</label>
                 <input 
@@ -58,24 +58,12 @@
             </div>
             <div class="form-control">
                 <label for="ingredients">Ingredients</label>
-                <% if (editing) {
-                  for (let i = 0; i < recipe.ingredients.length; i++) { %>
-                    <input 
-                        class="<%= validationErrors.find(e => e.param === 'ingredients') ? 'invalid' : 'ingredient' %>"
-                        type="text" 
-                        name="ingredient<%i%>" 
-                        id="ingredient<%i%>" 
-                        value="<% recipe.ingredients[i] %>">
-                        <% } %>
-                    <% } %>
-                  <% } else {%>
-                <input 
-                    class="<%= validationErrors.find(e => e.param === 'ingredients') ? 'invalid' : 'ingredient' %>"
-                    type="text" 
-                    name="ingredient0" 
-                    id="ingredient0" 
-                    value="">
-                    <% } %>
+                    <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'directions') ? 'invalid' : 'directions' %>"
+                    name="ingredients" 
+                    id="ingredients" 
+                    rows="5"
+                    cols="50"><% if (editing || hasError) { %><%= recipe.ingredients %><% } %></textarea>
             </div>
             <div class="form-control">
                 <label for="directions">Directions</label>
@@ -83,7 +71,8 @@
                     class="<%= validationErrors.find(e => e.param === 'directions') ? 'invalid' : 'directions' %>"
                     name="directions" 
                     id="directions" 
-                    rows="5"><% if (editing || hasError) { %><%= recipe.directions %><% } %></textarea>
+                    rows="5"
+                    cols="80"><% if (editing || hasError) { %><%= recipe.directions %><% } %></textarea>
             </div>
             <div class="form-control">
                 <label for="notes">Notes</label>
@@ -91,7 +80,8 @@
                     class="<%= validationErrors.find(e => e.param === 'directions') ? 'invalid' : 'notes' %>"
                     name="notes" 
                     id="notes" 
-                    rows="5"><% if (editing || hasError) { %><%= recipe.notes %><% } %></textarea>
+                    rows="5"
+                    cols="80"><% if (editing || hasError) { %><%= recipe.notes %><% } %></textarea>
             </div>
             <div class="form-control">
                 <label for="tags">Tags</label>
@@ -104,7 +94,6 @@
                         id="tag<%i%>" 
                         value="<% recipe.tags[i] %>">
                         <% } %>
-                    <% } %>
                   <% } else {%>
                 <input 
                     class="<%= validationErrors.find(e => e.param === 'tags') ? 'invalid' : 'tag' %>"
@@ -118,7 +107,8 @@
                 <input type="hidden" value="<%= recipe._id %>" name="recipeId">
             <% } %>
 
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="_csrf" value="">
+            <input type="hidden" name="userId" value="<%= userId %>">
             <button class="btn" type="submit"><% if (editing) { %>Update Recipe<% } else { %>Add Recipe<% } %></button>
         </form>
     </main>
