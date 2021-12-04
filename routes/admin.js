@@ -4,12 +4,14 @@ const router = express.Router();
 
 const adminController = require('../controllers/admin');
 
-router.post('/addRecipe', adminController.postAddRecipe);
+router.get('/add-recipe', adminController.getAddRecipe);
 
-router.get('/editRecipe/:recipeId', adminController.getEditRecipe);
+router.post('/add-recipe', adminController.postAddRecipe);
 
-router.post('/editRecipe', adminController.postEditRecipe);
+router.get('/edit-recipe/:recipeId', adminController.getEditRecipe);
 
-router.post('/deleteProduct', adminController.postDeleteProduct);
+router.post('/edit-recipe', adminController.postEditRecipe);
+
+router.post('/delete-recipe', adminController.postDeleteRecipe);
 
 module.exports = router;

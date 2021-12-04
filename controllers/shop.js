@@ -78,7 +78,6 @@ exports.getRecipe = (req,res, next) => {
             recipe: recipe,
             user: user
         });
-
     })
     .catch(err => console.log(err));
 };
