@@ -84,20 +84,35 @@ exports.getRecipe = (req,res, next) => {
     .catch(err => console.log(err));
 }
 exports.getFavorites = (req,res, next) => {
-    console.log("we're awesome")
-    const userId = req.user.userId;
+    console.log(req.session.userId)
+    const userId = req.session.userId;
     User.findById(userId).populate("favorites")
     .then(user => {
-        const favorites = user.favorites
+       return favorites = user.favorites
+        
     })
     .then(favorites => {
+        console.log(favorites)
         res.render('shop/userfavorites', {
         pageTitle: "favorites",
         path: '/userfavorites',
         recipes: favorites
     });
+
 })
     .catch(err => console.log(err));
 }
 ;
-
+exports.getUserRecipes = (req,res, next) => {
+    console.log(req.session.userId)
+    const userId = req.session.userId;
+    Recipe.find({userId:userId})
+    .then(recipes => {
+        res.render('shop/userrecipes', {
+            pageTitle: "userrecipes",
+            path: '/userrecipes',
+            recipes: recipes
+        });
+    
+        
+    }).catch(err => console.log(err));}
