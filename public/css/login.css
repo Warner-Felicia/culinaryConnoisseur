@@ -422,3 +422,10 @@ footer {
 	margin: 2em auto;
 	padding: 15px;
 }
+
+img{
+	margin-top: 1em;
+	max-width: 300px;
+	max-height: 400px;
+	border-radius: 11px;
+}
