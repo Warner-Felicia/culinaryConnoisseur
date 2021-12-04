@@ -31,13 +31,8 @@
           <h2 class="recipe_servings">
             <%= `${recipe.servings} servings` %>
           </h2>
-          <ul class="recipe_ingredients">
-            <% for (let ingredient of recipe.ingredients) { %>
-              <li class="recipe_ingredient">
-                <% ingredient %>
-              </li>
-              <% } %>
-          </ul>
+          <h3>Ingredients</h3>
+          <p><% recipe.ingredients %></p>
           <h3>Directions</h3>
           <p><% recipe.directions %></p>
           <h3>Notes</h3>
@@ -50,6 +45,11 @@
         </div>
         <!-- TODO: If recipe.userId == currentUser._id, allow edit/delete -->
         <div class=" card__actions">
+          <form action="/addFavorite" method="POST">
+            <input type="hidden" value="<%= recipe._id %>" name="recipeId">
+            <input type="hidden" name="_csrf" value="">
+            <button class="btn" type="submit">Add to Favorites</button>
+          </form>
               <a href="/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
               <form action="/recipe-delete" method="POST">
                 <input type="hidden" value="<%= recipe._id %>" name="recipeId">
