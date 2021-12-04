@@ -67,8 +67,26 @@ exports.getRecipe = (req,res, next) => {
             path: '/recipeDetails',
             recipe: recipe
         });
-
+    
     })
+
     .catch(err => console.log(err));
-};
+}
+exports.getFavorites = (req,res, next) => {
+    console.log("we're awesome")
+    const userId = req.user.userId;
+    User.findById(userId).populate("favorites")
+    .then(user => {
+        const favorites = user.favorites
+    })
+    .then(favorites => {
+        res.render('shop/userfavorites', {
+        pageTitle: "favorites",
+        path: '/userfavorites',
+        recipes: favorites
+    });
+})
+    .catch(err => console.log(err));
+}
+;
 

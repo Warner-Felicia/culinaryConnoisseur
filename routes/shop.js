@@ -17,4 +17,6 @@ router.get('/recipes', shopController.getRecipes);
 
 router.get('/recipe/:recipeId', shopController.getRecipe);
 
-module.exports = router;
+router.get('/favorites', shopController.getFavorites);
+
+module.exports = router
