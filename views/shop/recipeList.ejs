@@ -11,22 +11,7 @@
 </head>
 
 <body>
-  <header>
-    <button id="side-menu-toggle">Menu</button>
-    <div class="nav_container">
-      <nav class="main-header_nav">
-        <ul>
-          <a href="#home"><img src="images/CulinaryLogo.png" alt="logo" class="logo"></a>
-          <li><a action="/signInUp" href="/signInUp">Login</a></li>
-          <li><a href="/recipes">All Recipes</a></li>
-          <li><a href="#">User's Recipes</a></li>
-          <li><a href="#">Favorite Recipes</a></li>
-          <li><a href="#">Edit Recipe</a></li>
-          <li><a action="/preferences" href="/preferences">Preferences</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <%- include('.././includes/nav.ejs') %>
 
   <main>
     <% if (recipes.length > 0) { %>
