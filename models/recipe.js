@@ -31,11 +31,9 @@ const recipeSchema = new Schema({
         type: [String]
     },
     userId: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true
-        //**TO-DO replace type string with code below */
-        // type: Schema.Types.ObjectId,
-        // ref: 'User'
     }
 
 });

@@ -32,15 +32,14 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    favorites: {
-        type: [{recipeId: String}]
-    } 
-
+    favorites: [{ type: Schema.Types.ObjectId,
+                    ref: 'Recipe'
+                 }]
 
 });
 
 userSchema.methods.addFavorite = function(recipeId) {
-    this.favorites.push({ 'recipeId': recipeId });
+    this.favorites.push(recipeId);
     return this.save();
 };
 

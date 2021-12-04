@@ -21,4 +21,4 @@ router.get('/favorites', shopController.getFavorites);
 
 router.get('/UserRecipes', shopController.getUserRecipes);
 
-module.exports = router
+module.exports = router;

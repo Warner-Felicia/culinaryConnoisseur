@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-  <title><%= pageTitle %></title>
+  <title><%= title %></title>
   <link rel="stylesheet" href="/css/slideshow.css">
   <link rel="stylesheet" href="/css/login.css">
 </head>
@@ -16,16 +16,10 @@
   <main>
     <h1><%= recipe.title %></h1>
     <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
-    <h2>Time: <%= recipe.time %></h3>
-      <h2>Servings: <%= recipe.servings %></h3>
-        <table>
-          <% recipe.ingredients.forEach(ingredient => { %>
-          <tr>
-            <td><%= ingredient.quantity%></td>
-            <td><%= ingredient.name %></td>
-          </tr>
-          <% }) %>
-        </table>
+    <h2>Time: <%= recipe.time %></h2>
+      <h2>Servings: <%= recipe.servings %></h2>
+      <%=recipe.ingredients %>
+        
         <p><%= recipe.directions %></p>
         <p>Note: <%= recipe.note %></p>
         <p>Tags: <%= recipe.tags.join(', ') %></p>
