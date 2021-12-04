@@ -120,11 +120,16 @@ exports.getPreferences = (req, res, next) => {
     if (!req.session.isLoggedIn) {
         res.redirect('/signInUp');
     }
+    const user = req.session.isLoggedIn;
+    console.log(user);
     User.findById(req.session.userId)
-        .then(user => {
+        .then(users => {
+            const user = req.session.isLoggedIn;
+            console.log(user);
             res.render('auth/preferences', {
                 pageTitle: 'Preferences',
                 path: '/auth/preferences',
+                users: users,
                 user: user
             });
         })
@@ -173,4 +178,11 @@ exports.postUpdateSecurityPhrase = (req, res, next) => {
         res.redirect('/preferences');
     })
     .catch(err => console.log(err));
+}
+
+exports.postLogout = (req, res, next) => {
+    req.session.destroy(err => {
+        console.log(err);
+        res.redirect('/signInUp');
+    })
 }

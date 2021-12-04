@@ -11,43 +11,35 @@
 </head>
 
 <body>
-  <header>
-    <button id="side-menu-toggle">Menu</button>
-    <div class="nav_container">
-      <nav class="main-header_nav">
-        <ul>
-          <a href="#home"><img src="images/CulinaryLogo.png" alt="logo" class="logo"></a>
-          <li><a action="/signInUp" href="/signInUp">Login</a></li>
-          <li><a href="/recipes">All Recipes</a></li>
-          <li><a href="#">User's Recipes</a></li>
-          <li><a href="#">Favorite Recipes</a></li>
-          <li><a href="#">Edit Recipe</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <%- include('.././includes/nav.ejs') %>
 
   <main>
     <% if (recipes.length > 0) { %>
     <h1>Recipes</h1>
-    <% recipes.forEach(recipe => { %>
-    <a href='/recipe/<%=recipe._id%>'>
-      <h2><%= recipe.title %></h2>
-      <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
-      <% if (recipe.time) { %>
-      <h2>Time: <%= recipe.time %></h2>
-      <% } %>
-      <% if (recipe.servings) { %>
-      <h2>Servings: <%= recipe.servings %></h2>
-      <% } %>
-      <% if (recipe.note) { %>
-      <p>Note: <%= recipe.note %></p>
-      <% } %>
-      <% if (recipe.tags.length > 0) { %>
-      <p>Tags: <%= recipe.tags.join(', ') %></p>
-      <% } %>
-    </a>
-    <% }) %>
+    <div class="grid">
+      <% recipes.forEach(recipe => { %>
+        <article class="card product-item">
+          <a class="card" href='/recipe/<%=recipe._id%>'>
+            <header class="card__header">
+              <h2 class="card_content"><%= recipe.title %></h2>
+            </header>
+              <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
+              <% if (recipe.time) { %>
+              <h2>Time: <%= recipe.time %></h2>
+              <% } %>
+              <% if (recipe.servings) { %>
+              <h2>Servings: <%= recipe.servings %></h2>
+              <% } %>
+              <% if (recipe.note) { %>
+              <p>Note: <%= recipe.note %></p>
+              <% } %>
+              <% if (recipe.tags.length > 0) { %>
+              <p>Tags: <%= recipe.tags.join(', ') %></p>
+              <% } %>
+            </a>
+          </article>
+      <% }) %>
+  </div>
     <% } else { %>
     <h1>We currently have no recipes to share. Please <a href='#'>add</a> your own or check back later</h1>
     <% } %>

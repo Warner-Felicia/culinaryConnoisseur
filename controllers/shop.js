@@ -1,4 +1,3 @@
-
 const User = require('../models/user');
 
 const Recipe = require('../models/recipe');
@@ -8,15 +7,17 @@ exports.getIndex = (req, res, next) => {
     if (!req.session.isLoggedIn) {
         res.redirect('/signInUp');
     }
-     res.render('home', {
+    const user = req.session.isLoggedIn;
+     res.render('shop/home', {
                 pageTitle: 'Culinary Connoisseur Home',
-                path: '/'
+                path: '/',
+                user: user
     }); 
     
 };
 
 exports.postIndex = (req, res, next) => {
-    res.render('home', {
+    res.render('shop/home', {
         pageTitle: 'Culinary Connoisseur Home',
         path: '/'
     });
@@ -44,19 +45,28 @@ exports.postDeleteFavorite = (req, res, next) => {
 };
 
 exports.getRecipes = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
+    const user = req.session.isLoggedIn;
     Recipe.find()
         .then(recipes => {
             res.render('shop/recipeList', {
                 pageTitle: 'Recipes',
                 path: '/recipe',
-                recipes: recipes
+                recipes: recipes,
+                user: user
             });
         })
         .catch(err => console.log(err));
 };
 
 exports.getRecipe = (req,res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const recipeId = req.params.recipeId;
+    const user = req.session.isLoggedIn;
     Recipe.findById(recipeId)
     .then(recipe => {
         if(!recipe) {
@@ -65,7 +75,8 @@ exports.getRecipe = (req,res, next) => {
         res.render('shop/recipeDetails', {
             pageTitle: recipe.title,
             path: '/recipeDetails',
-            recipe: recipe
+            recipe: recipe,
+            user: user
         });
     
     })

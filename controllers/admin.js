@@ -1,64 +1,77 @@
 const Recipe = require('../models/recipe');
 
 exports.getEditRecipe = (req, res, next) => {
-    const recipeId = req.params.recipeId;
-    Recipe.findById(recipeId)
+  const recipeId = req.params.recipeId;
+  Recipe.findById(recipeId)
     .then(recipe => {
-        //**TO-DO use the returned recipe */
+      if (!recipe) {
+        return res.redirect('/');
+      }
+
+      res.render('edit-recipe', {
+        title: 'Edit Product',
+        path: '/admin/edit-recipe',
+        editing: editMode,
+        recipe: recipe,
+        hasError: false,
+        errorMessage: null,
+        validationErrors: []
+      });
     })
     .catch(err => console.log(err));
-
 };
 
 exports.postEditRecipe = (req, res, next) => {
-    const recipeId = req.body.recipeId;
-    const updatedTitle = req.body.title;
-    const updatedIngredientQuantities = req.body.ingredientQuantity;
-    const updatedIngredientNames = req.body.ingredientName;
-    const updatedDirections = req.body.directions;
-    const updatedTime = req.body.time;
-    const updatedServings = req.body.servings;
-    //**TO-DO replace imageUrl with file path */
-    const updatedImageUrl = req.body.imageUrl;
-    const updatedNote = req.body.note;
-    const updatedTags = req.body.tags;
-    //**TO-DO replace userId with session user id */
-    const updatedIngredients = [];
-    const updatedTagsArray = updatedTags.split(' ');
+  const recipeId = req.body.recipeId;
+  const updatedTitle = req.body.title;
+  const updatedIngredientQuantities = req.body.ingredientQuantity;
+  const updatedIngredientNames = req.body.ingredientName;
+  const updatedDirections = req.body.directions;
+  const updatedTime = req.body.time;
+  const updatedServings = req.body.servings;
+  //**TO-DO replace imageUrl with file path */
+  const updatedImageUrl = req.body.imageUrl;
+  const updatedNote = req.body.note;
+  const updatedTags = req.body.tags;
+  //**TO-DO replace userId with session user id */
+  const updatedIngredients = [];
+  const updatedTagsArray = updatedTags.split(' ');
 
-     //colating ingredientQuantities and ingredientNames
-     for (let i = 0; i < updatedIngredientQuantities.length; i++) {
-        const ingredient = {
-            quantity: updatedIngredientQuantities[i],
-            name: updatedIngredientNames[i]
-        };
-        updatedIngredients.push(ingredient);
-    }
+  //colating ingredientQuantities and ingredientNames
+  for (let i = 0; i < updatedIngredientQuantities.length; i++) {
+    const ingredient = {
+      quantity: updatedIngredientQuantities[i],
+      name: updatedIngredientNames[i]
+    };
+    updatedIngredients.push(ingredient);
+  }
 
-    Recipe.findById(recipeId)
+  Recipe.findById(recipeId)
     .then(recipe => {
-        recipe.title = updatedTitle;
-        recipe.ingredients = updatedIngredients;
-        recipe.directions = updatedDirections;
-        recipe.time = updatedTime;
-        recipe.servings = updatedServings;
-        recipe.imageUrl = updatedImageUrl;
-        recipe.note = updatedNote;
-        recipe.tags = updatedTagsArray;
+      recipe.title = updatedTitle;
+      recipe.ingredients = updatedIngredients;
+      recipe.directions = updatedDirections;
+      recipe.time = updatedTime;
+      recipe.servings = updatedServings;
+      recipe.imageUrl = updatedImageUrl;
+      recipe.note = updatedNote;
+      recipe.tags = updatedTagsArray;
 
-        return recipe.save();
+      return recipe.save();
     })
-    .then(result => {
-        //**TO-DO decide where to go after updating a product */
-        res.redirect('/');
+    .then(recipe => {
+      res.render('recipes/recipe-detail', {
+        recipe: recipe,
+        title: recipe.title,
+        path: '/recipes'
+      });
     })
     .catch(err => console.log(err));
 };
 
 exports.postAddRecipe = (req, res, next) => {
     const title = req.body.title;
-    const ingredientQuantities = req.body.ingredientQuantity;
-    const ingredientNames = req.body.ingredientName;
+    const ingredients = req.body.ingredients;
     const directions = req.body.directions;
     const time = req.body.time;
     const servings = req.body.servings;
@@ -66,48 +79,52 @@ exports.postAddRecipe = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const note = req.body.note;
     const tags = req.body.tags;
-    //**TO-DO replace userId with session user id */
     const userId = req.body.userId;
-    const ingredients = [];
-    const tagsArray = tags.split(' ');
-    console.log(ingredientQuantities);
+    const tagsArray = tags ? tags.split(', ') : undefined;
 
-    //colating ingredientQuantities and ingredientNames
-    for (let i = 0; i < ingredientQuantities.length; i++) {
-        const ingredient = {
-            quantity: ingredientQuantities[i],
-            name: ingredientNames[i]
-        };
-        ingredients.push(ingredient);
-    }
-
-    const recipe = new Recipe({
-        title: title,
-        ingredients: ingredients,
-        directions: directions,
-        time: time,
-        servings: servings,
-        imageUrl: imageUrl,
-        note: note,
-        tags: tagsArray,
-        userId: userId
-    });
-    recipe.save()
-        .then(result => {
-            //**TO-DO decide where we really want this to go */
-            res.redirect('/');
-        })
-        .catch(err => console.log(err));
+  const recipe = new Recipe({
+    title: title,
+    ingredients: ingredients,
+    directions: directions,
+    time: time,
+    servings: servings,
+    imageUrl: imageUrl,
+    note: note,
+    tags: tagsArray,
+    userId: userId
+  });
+  recipe.save()
+    .then(result => {
+      console.log("Successfully saved recipe!");
+      res.render('recipes/recipe-detail', {
+        recipe: recipe,
+        title: recipe.title,
+        path: '/recipes'
+      });
+    })
+    .catch(err => console.log(err));
 };
 
-module.exports.postDeleteProduct = (req, res, nex) => {
-    const recipeId = req.body.recipeId;
-    Recipe.findByIdAndRemove(recipeId)
+module.exports.postDeleteRecipe = (req, res, nex) => {
+  const recipeId = req.body.recipeId;
+  Recipe.findByIdAndRemove(recipeId)
     .then(() => {
-        //**TO-DO decide where we want this to go */
-        res.redirect('/');
+      //**TO-DO decide where we want this to go */
+      res.redirect('/');
     })
     .catch(err => console.log(err));
 
 };
 
+exports.getAddRecipe = (req, res, next) => {
+  const userId = req.session.userId;
+  res.render('admin/edit-recipe', {
+    title: 'Add a Recipe',
+    path: '/admin/add-recipe',
+    editing: false,
+    hasError: false,
+    errorMessage: null,
+    validationErrors: [],
+    userId: userId
+  });
+};

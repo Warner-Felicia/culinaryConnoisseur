@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+  <title>
+    <% if (editing) { recipe.title } else { %>Add Recipe<% } %>
+  </title>
+</head>
+
+<body>
+   <%- include('../includes/nav.ejs') %>
+
+    <main>
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+        <form class="recipe-form" action="/<% if (editing) { %>admin/edit-recipe<% } else { %>admin/add-recipe<% } %>" method="POST">
+            <div class="form-control">
+                <label for="title">Recipe Title</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'title') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="title" 
+                    id="title" 
+                    value="<% if (editing || hasError) { %><%= recipe.title %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="imageUrl">Recipe Image URL</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'imageUrl') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="imageUrl" 
+                    id="imageUrl" 
+                    value="<% if (editing || hasError) { %><%= recipe.imageUrl %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="time">Total Time in Minutes</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'time') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="time" 
+                    id="time" 
+                    step="1" 
+                    value="<% if (editing || hasError) { %><%= recipe.time %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="time">Total Servings</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'servings') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="servings" 
+                    id="servings" 
+                    step="1" 
+                    value="<% if (editing || hasError) { %><%= recipe.servings %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="ingredients">Ingredients</label>
+                    <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'directions') ? 'invalid' : 'directions' %>"
+                    name="ingredients" 
+                    id="ingredients" 
+                    rows="5"
+                    cols="50"><% if (editing || hasError) { %><%= recipe.ingredients %><% } %></textarea>
+            </div>
+            <div class="form-control">
+                <label for="directions">Directions</label>
+                <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'directions') ? 'invalid' : 'directions' %>"
+                    name="directions" 
+                    id="directions" 
+                    rows="5"
+                    cols="80"><% if (editing || hasError) { %><%= recipe.directions %><% } %></textarea>
+            </div>
+            <div class="form-control">
+                <label for="notes">Notes</label>
+                <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'directions') ? 'invalid' : 'notes' %>"
+                    name="notes" 
+                    id="notes" 
+                    rows="5"
+                    cols="80"><% if (editing || hasError) { %><%= recipe.notes %><% } %></textarea>
+            </div>
+            <div class="form-control">
+                <label for="tags">Tags</label>
+                <% if (editing) {
+                  for (let i = 0; i < recipe.tags.length; i++) { %>
+                    <input 
+                        class="<%= validationErrors.find(e => e.param === 'tags') ? 'invalid' : 'tag' %>"
+                        type="text" 
+                        name="tag<%i%>" 
+                        id="tag<%i%>" 
+                        value="<% recipe.tags[i] %>">
+                        <% } %>
+                  <% } else {%>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'tags') ? 'invalid' : 'tag' %>"
+                    type="text" 
+                    name="tag0" 
+                    id="tag0" 
+                    value="">
+                    <% } %>
+            </div>
+            <% if (editing) { %>
+                <input type="hidden" value="<%= recipe._id %>" name="recipeId">
+            <% } %>
+
+            <input type="hidden" name="_csrf" value="">
+            <input type="hidden" name="userId" value="<%= userId %>">
+            <button class="btn" type="submit"><% if (editing) { %>Update Recipe<% } else { %>Add Recipe<% } %></button>
+        </form>
+    </main>
+    <script src='../public/js/recipeEdit.js'></script>
+</body>
+</html>

@@ -26,4 +26,6 @@ router.post('/updateSecurityPhrase', authController.postUpdateSecurityPhrase);
 
 router.post('/deleteUser', authController.postDeleteUser);
 
+router.post('/logout', authController.postLogout);
+
 module.exports = router;
