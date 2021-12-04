@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+  <title><%= pageTitle %></title>
+  <link rel="stylesheet" href="/css/slideshow.css">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+  <%- include('.././includes/nav.ejs') %>
+
+  <main>
+    <% if (recipes.length > 0) { %>
+    <h1>Recipes</h1>
+    <div class="grid">
+      <% recipes.forEach(recipe => { %>
+        <article class="card product-item">
+          <a class="card" href='/recipe/<%=recipe._id%>'>
+            <header class="card__header">
+              <h2 class="card_content"><%= recipe.title %></h2>
+            </header>
+              <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
+              <% if (recipe.time) { %>
+              <h2>Time: <%= recipe.time %></h2>
+              <% } %>
+              <% if (recipe.servings) { %>
+              <h2>Servings: <%= recipe.servings %></h2>
+              <% } %>
+              <% if (recipe.note) { %>
+              <p>Note: <%= recipe.note %></p>
+              <% } %>
+              <% if (recipe.tags.length > 0) { %>
+              <p>Tags: <%= recipe.tags.join(', ') %></p>
+              <% } %>
+            </a>
+          </article>
+      <% }) %>
+  </div>
+    <% } else { %>
+    <h1>We currently have no recipes to share. Please <a href='#'>add</a> your own or check back later</h1>
+    <% } %>
+
+  </main>
+</body>
+
+</html>

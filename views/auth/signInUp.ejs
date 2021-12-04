@@ -9,35 +9,28 @@
 </head>
 
 <header>
-    <button id="side-menu-toggle">Menu</button>
-    <div class="nav_container">
-      <nav class="main-header_nav">
-        <ul>
-            <a action="/home" href="/"><img src="/images/CulinaryLogo.png" alt="LOGO" class="logo"></a>
-            <li><a action="/signInUp" class="active" href="/signInUp">Login</a></li>
-            <li><a href="#">All Recipes</a></li>
-            <li><a href="#">User's Recipes</a></li>
-            <li><a href="#">Favorite Recipes</a></li>
-            <li><a href="#">Edit Recipe</a></li>
-            
-            <li><a action="/preferences" href="/preferences">Preferences</a></li>
-
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <button id="side-menu-toggle">Menu</button>
+  <div class="nav_container">
+    <nav class="main-header_nav">
+      <ul>
+          <a href="/"><img src="../../images/CulinaryLogo.png" alt="logo" class="logo"></a>
+      </ul>
+    </nav>
+  </div>
+</header>
 
 <body>
-    <br>
     <!-- sign in portion -->
   <div class="container" id="container">
     <div class="form-container sign-up-container">
       <form action="/signUp" method="POST">
         <h1>Create Account</h1>
         <input name="firstName" type="text" placeholder="First Name" />
-        <input name="lastName" type="text" placeholder="last Name" />
+        <input name="lastName" type="text" placeholder="Last Name" />
         <input name="email" type="email" placeholder="Email" />
         <input name="password" type="password" placeholder="Password" />
+        <input name="securityPhrase" type="text" placeholder="Security Phrase" />
+        <input name="passwordHint" type="text" placeholder="Security Phrase Hint" />
         <button>Sign Up</button>
       </form>
     </div>
@@ -47,7 +40,7 @@
         <h1>Sign in</h1>
         <input name="email" type="email" placeholder="Email" />
         <input name="password" type="password" id='password' name="password" placeholder="Password" />
-        <div class='passwordToggle'>Show Password</div><br>
+        <div class='passwordToggle'>Show Password</div>
         <a style="font-size: 15px;" action="/reset" href="/reset">Forgot your password?</a>
         <button class="button">Sign In</button>
       </form>

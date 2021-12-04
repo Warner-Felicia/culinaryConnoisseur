@@ -57,6 +57,8 @@ userSchema.methods.createUser = function(user) {
     this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.password = user.password;
+    this.securityPhrase = user.securityPhrase;
+    this.passwordHint = user.passwordHint;
     this.favorites = [];
     return this.save();
 };
@@ -65,6 +67,13 @@ userSchema.methods.editUser = function(user) {
     this.email = user.email;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
+    return this.save();
+};
+
+userSchema.methods.editNames = function(user) {
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.email = user.email;
     return this.save();
 };
 

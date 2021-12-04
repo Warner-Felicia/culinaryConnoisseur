@@ -70,20 +70,21 @@ exports.postEditRecipe = (req, res, next) => {
 };
 
 exports.postAddRecipe = (req, res, next) => {
-  const title = req.body.title;
-  const ingredientQuantities = req.body.ingredientQuantity;
-  const ingredientNames = req.body.ingredientName;
-  const directions = req.body.directions;
-  const time = req.body.time;
-  const servings = req.body.servings;
-  //**TO-DO replace imageUrl with file path */
-  const imageUrl = req.body.imageUrl;
-  const note = req.body.note;
-  const tags = req.body.tags;
-  //**TO-DO replace userId with session user id */
-  const userId = req.body.userId;
-  const ingredients = [];
-  const tagsArray = tags.split(' ');
+    const title = req.body.title;
+    const ingredientQuantities = req.body.ingredientQuantity;
+    const ingredientNames = req.body.ingredientName;
+    const directions = req.body.directions;
+    const time = req.body.time;
+    const servings = req.body.servings;
+    //**TO-DO replace imageUrl with file path */
+    const imageUrl = req.body.imageUrl;
+    const note = req.body.note;
+    const tags = req.body.tags;
+    //**TO-DO replace userId with session user id */
+    const userId = req.body.userId;
+    const ingredients = [];
+    const tagsArray = tags.split(' ');
+    console.log(ingredientQuantities);
 
   //colating ingredientQuantities and ingredientNames
   for (let i = 0; i < ingredientQuantities.length; i++) {

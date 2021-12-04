@@ -1,18 +1,23 @@
-
 const User = require('../models/user');
 
 const Recipe = require('../models/recipe');
 
 
 exports.getIndex = (req, res, next) => {
-    res.render('home', {
-        pageTitle: 'Culinary Connoisseur Home',
-        path: '/'
-    });
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
+    const user = req.session.isLoggedIn;
+     res.render('shop/home', {
+                pageTitle: 'Culinary Connoisseur Home',
+                path: '/',
+                user: user
+    }); 
+    
 };
 
 exports.postIndex = (req, res, next) => {
-    res.render('home', {
+    res.render('shop/home', {
         pageTitle: 'Culinary Connoisseur Home',
         path: '/'
     });
@@ -40,22 +45,39 @@ exports.postDeleteFavorite = (req, res, next) => {
 };
 
 exports.getRecipes = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
+    const user = req.session.isLoggedIn;
     Recipe.find()
         .then(recipes => {
-            //**TO-DO what to one once all recipes have been returned from the database */
+            res.render('shop/recipeList', {
+                pageTitle: 'Recipes',
+                path: '/recipe',
+                recipes: recipes,
+                user: user
+            });
         })
         .catch(err => console.log(err));
 };
 
 exports.getRecipe = (req,res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const recipeId = req.params.recipeId;
+    const user = req.session.isLoggedIn;
     Recipe.findById(recipeId)
     .then(recipe => {
-      res.render('recipes/recipe-detail', {
-        recipe: recipe,
-        title: recipe.title,
-        path: '/recipes'
-      });
+        if(!recipe) {
+            //**TO-DO route to error handling */
+        }
+        res.render('shop/recipeDetails', {
+            pageTitle: recipe.title,
+            path: '/recipeDetails',
+            recipe: recipe,
+            user: user
+        });
     })
     .catch(err => console.log(err));
 };
