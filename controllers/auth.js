@@ -20,11 +20,13 @@ exports.postSignUp = (req, res, next) => {
     if (!userName) {
         userName = email.split('@')[0];
     }
-    if(User.findOne({ email: email })){
+    if (User.findOne({
+            email: email
+        })) {
         console.log('User already exists');
         res.redirect('/signInUp');
     }
-    
+
     const user = new User({
         email: email,
         firstName: firstName,
@@ -46,7 +48,9 @@ exports.postSignUp = (req, res, next) => {
 exports.postLogIn = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    User.findOne({ email: email })
+    User.findOne({
+            email: email
+        })
         .then(user => {
             console.log(user);
             if (!user) {
@@ -67,7 +71,7 @@ exports.postLogIn = (req, res, next) => {
 };
 
 exports.getReset = (req, res, next) => {
-        res.render('auth/passwordReset', {
+    res.render('auth/passwordReset', {
         pageTitle: 'Password Reset',
         path: '/auth/reset',
         hint: false
@@ -76,44 +80,49 @@ exports.getReset = (req, res, next) => {
 
 exports.postShowHint = (req, res, next) => {
     const email = req.body.email;
-    User.find({ email: email })
-    .then(user => {
-        res.render('auth/passwordReset', {
-            pageTitle: 'Password Reset',
-            path: '/auth/reset',
-            hint: true,
-            user: user[0]
-        });
-    })
-    .catch(err => console.log(err));
+    User.find({
+            email: email
+        })
+        .then(user => {
+            res.render('auth/passwordReset', {
+                pageTitle: 'Password Reset',
+                path: '/auth/reset',
+                hint: true,
+                user: user[0]
+            });
+        })
+        .catch(err => console.log(err));
 };
 
 exports.postReset = (req, res, next) => {
     const email = req.body.email;
     const securityPhrase = req.body.securityPhrase;
-    User.findOne({ email: email })
-    .then(user => {
-        if(user.securityPhrase !== securityPhrase) {
-            res.redirect('/reset');
-        } else {
-            res.redirect('/preferences');
-        }
-        
-    })
-    .catch(err => console.log(err));
+    User.findOne({
+            email: email
+        })
+        .then(user => {
+            if (user.securityPhrase !== securityPhrase) {
+                res.redirect('/reset');
+            } else {
+                res.redirect('/preferences');
+            }
+
+        })
+        .catch(err => console.log(err));
 };
 
 
 
 exports.postDeleteUser = (req, res, next) => {
-    //**TO-DO replace hard-coded userId with session user */
-    const userId = '618d951db51a9ea1580b80af';
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
+    const userId = req.session.userId;
     User.findByIdAndRemove(userId)
-    .then(() => {
-        //**TO-DO decide where we really want this to go */
-        res.redirect('/');
-    })
-    .catch(err => console.log(err));
+        .then(() => {
+            res.redirect('/');
+        })
+        .catch(err => console.log(err));
 };
 
 exports.getPreferences = (req, res, next) => {
@@ -137,52 +146,64 @@ exports.getPreferences = (req, res, next) => {
 };
 
 exports.postUpdateNames = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const firstName = req.body.firstname;
     const lastName = req.body.lastname;
     const email = req.body.email;
     const userId = req.session.userId;
     User.findByIdAndUpdate(userId, {
-        firstName: firstName,
-        lastName: lastName,
-        email: email
-    })
-    .then(() => {
-        console.log('User updated');
-        res.redirect('/preferences');
-    })
-    .catch(err => console.log(err));
-}
+            firstName: firstName,
+            lastName: lastName,
+            email: email
+        })
+        .then(() => {
+            console.log('User updated');
+            res.redirect('/preferences');
+        })
+        .catch(err => console.log(err));
+};
 
 exports.postUpdatePassword = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const password = req.body.password;
     const userId = req.session.userId;
     User.findByIdAndUpdate(userId, {
-        password: bcrypt.hashSync(password, 10)
-    })
-    .then(() => {
-        console.log("Password updated");
-        res.redirect('/preferences');
-    })
-    .catch(err => console.log(err));
-}
+            password: bcrypt.hashSync(password, 10)
+        })
+        .then(() => {
+            console.log("Password updated");
+            res.redirect('/preferences');
+        })
+        .catch(err => console.log(err));
+};
 
 exports.postUpdateSecurityPhrase = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const securityPhrase = req.body.securityPhrase;
     const passwordHint = req.body.phraseHint;
     const userId = req.session.userId;
     User.findByIdAndUpdate(userId, {
-        securityPhrase: securityPhrase,
-        passwordHint: passwordHint
-    })
-    .then(() => {
-        res.redirect('/preferences');
-    })
-    .catch(err => console.log(err));
-}
+            securityPhrase: securityPhrase,
+            passwordHint: passwordHint
+        })
+        .then(() => {
+            res.redirect('/preferences');
+        })
+        .catch(err => console.log(err));
+};
 
 exports.postLogout = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     req.session.destroy(err => {
         console.log(err);
         res.redirect('/signInUp');
-    })
-}
+    });
+};

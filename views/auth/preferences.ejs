@@ -23,6 +23,7 @@
              <input type="lastname" name="lastname" id="lastname" value="<%= users.lastName %>">
              <label class="black-font" for="email">Email</label>
              <input type="email" name="email" id="email" value="<%= users.email %>">
+             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update User</button>
            </form>
          </div>
@@ -32,6 +33,7 @@
              <input type="password" name="password" id="password" placeholder="Password">
              <label class="black-font" for="confirm-password">Confirm Password</label>
              <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
+             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update Password</button>
            </form>
          </div>
@@ -41,6 +43,7 @@
              <input type="text" name="securityPhrase" id="securityPhrase" value="<%= users.securityPhrase %>">
              <label for="phraseHint" class="black-font">Security Hint</label>
              <input type="text" name="phraseHint" id="phraseHint" value="<%= users.passwordHint %>">
+             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update Security Phrase</button>
            </form>
          </div>
