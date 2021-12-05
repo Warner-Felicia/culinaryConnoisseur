@@ -1,6 +1,9 @@
 const Recipe = require('../models/recipe');
 
 exports.getEditRecipe = (req, res, next) => {
+  if (!req.session.isLoggedIn) {
+    res.redirect('/signInUp');
+  }
   const recipeId = req.params.recipeId;
   Recipe.findById(recipeId)
     .then(recipe => {
@@ -22,6 +25,9 @@ exports.getEditRecipe = (req, res, next) => {
 };
 
 exports.postEditRecipe = (req, res, next) => {
+  if (!req.session.isLoggedIn) {
+    res.redirect('/signInUp');
+  }
   const recipeId = req.body.recipeId;
   const updatedTitle = req.body.title;
   const updatedIngredientQuantities = req.body.ingredientQuantity;
@@ -99,7 +105,7 @@ exports.postAddRecipe = (req, res, next) => {
   recipe.save()
     .then(result => {
       console.log("Successfully saved recipe!");
-      res.render('shop/recipeDetails', {
+      res.render('shop/recipe-details', {
         recipe: recipe,
         title: recipe.title,
         path: '/recipes'
@@ -109,11 +115,13 @@ exports.postAddRecipe = (req, res, next) => {
 };
 
 module.exports.postDeleteRecipe = (req, res, nex) => {
+  if (!req.session.isLoggedIn) {
+    res.redirect('/signInUp');
+  }
   const recipeId = req.body.recipeId;
   Recipe.findByIdAndRemove(recipeId)
     .then(() => {
-      //**TO-DO decide where we want this to go */
-      res.redirect('/');
+      res.redirect('/UserRecipes');
     })
     .catch(err => console.log(err));
 

@@ -9,7 +9,12 @@
             <li><a href="/favorites">Favorite Recipes</a></li>
             <li><a href="#">Edit Recipe</a></li>
             <li><a action="/preferences" href="/preferences">Preferences</a></li>
-            <li><form action="/logout" method="POST" class="navForm"><button style="background: rgb(129, 118, 19); font-family: Avenir Next, sans-serif; font-weight:normal; font-size: 18px; float: left;"  id="logoutBtn" type="submit">Log Out</button></form></li>
+            <li>
+              <form action="/logout" method="POST" class="navForm">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button style="background: rgb(129, 118, 19); font-family: Avenir Next, sans-serif; font-weight:normal; font-size: 18px; float: left;"  id="logoutBtn" type="submit">Log Out</button>
+              </form>
+            </li>
         </ul>
       </nav>
     </div>
