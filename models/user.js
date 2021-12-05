@@ -32,15 +32,14 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    favorites: {
-        type: [{recipeId: String}]
-    } 
-
+    favorites: [{ type: Schema.Types.ObjectId,
+                    ref: 'Recipe'
+                 }]
 
 });
 
 userSchema.methods.addFavorite = function(recipeId) {
-    this.favorites.push({ 'recipeId': recipeId });
+    this.favorites.push(recipeId);
     return this.save();
 };
 
@@ -57,6 +56,8 @@ userSchema.methods.createUser = function(user) {
     this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.password = user.password;
+    this.securityPhrase = user.securityPhrase;
+    this.passwordHint = user.passwordHint;
     this.favorites = [];
     return this.save();
 };
@@ -65,6 +66,13 @@ userSchema.methods.editUser = function(user) {
     this.email = user.email;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
+    return this.save();
+};
+
+userSchema.methods.editNames = function(user) {
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.email = user.email;
     return this.save();
 };
 

@@ -8,42 +8,43 @@
     <link href="/css/preferences.css" rel="stylesheet" type="text/css">
 </head>
 
-<header>
-    <button id="side-menu-toggle">Menu</button>
-    <div class="nav_container">
-      <nav class="main-header_nav">
-        <ul>
-            <a action="/home" href="/"><img src="../images/CulinaryLogo.png" alt="LOGO" class="logo"></a>
-            <li><a href="#">All Recipes</a></li>
-            <li><a href="#">User's Recipes</a></li>
-            <li><a href="#">Favorite Recipes</a></li>
-            <li><a href="#">Edit Recipe</a></li>
-            <li><a action="/signInUp" href="/signInUp">Login</a></li>
-            <li><a action="/auth/preferences" class="active">Preferences</a></li>
-
-        </ul>
-      </nav>
-    </div>
-  </header>
+<%- include('.././includes/nav.ejs') %>
 
 <body>
-    <br>
-    <!-- sign in portion -->
+    <!-- Update Preferences portion -->
   <div class="container" id="container">
-    <form action="">
      <h1 class="black-font">Preferences</h1>
        <div>
-              <label class="black-font" for="firstname">First Name</label>
-              <input type="firstname" name="firstname" id="firstname" placeholder="">
-              <label class="black-font" for="lastname">Last Name</label>
-              <input type="lastname" name="lastname" id="lastname" placeholder="">
-              <label class="black-font" for="email">Email</label>
-              <input type="email" name="email" id="email" placeholder="Email">
-              <label class="black-font" for="newPassword">New Password</label>
-              <input type="password" name="newPassword" id="newPassword" placeholder="New Password">
-
+         <div class="edit-user-info">
+           <form action="/updateNames" method="post">
+             <label class="black-font" for="firstname">First Name</label>
+             <input type="firstname" name="firstname" id="firstname" value="<%= users.firstName %>">
+             <label class="black-font" for="lastname">Last Name</label>
+             <input type="lastname" name="lastname" id="lastname" value="<%= users.lastName %>">
+             <label class="black-font" for="email">Email</label>
+             <input type="email" name="email" id="email" value="<%= users.email %>">
+             <button type="submit">Update User</button>
+           </form>
+         </div>
+         <div class="edit-user-password">
+           <form action="/updatePassword" method="post">
+             <label class="black-font" for="password">Password</label>
+             <input type="password" name="password" id="password" placeholder="Password">
+             <label class="black-font" for="confirm-password">Confirm Password</label>
+             <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
+             <button type="submit">Update Password</button>
+           </form>
+         </div>
+         <div class="edit-user-securityphrase">
+           <form action="/updateSecurityPhrase" method="post">
+             <label for="securityPhrase" class="black-font">Security Phrase</label>
+             <input type="text" name="securityPhrase" id="securityPhrase" value="<%= users.securityPhrase %>">
+             <label for="phraseHint" class="black-font">Security Hint</label>
+             <input type="text" name="phraseHint" id="phraseHint" value="<%= users.passwordHint %>">
+             <button type="submit">Update Security Phrase</button>
+           </form>
+         </div>
        </div>
-   </form>
   </div>
 
   <footer>Culinary Connoisseur</footer>

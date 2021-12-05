@@ -20,7 +20,7 @@ nav ul{
 nav li{
     display: inline-block;
     margin: 10px;
-    padding-top: 15px;
+    padding-top: 10px;
     position: relative;
 }
 
@@ -51,6 +51,12 @@ nav a::before{
 nav a:hover::before{
     width: 100%;
 }
+
+.navForm, .logoutBtn{
+	background-color: rgb(129, 118, 19);
+	font-family: Avenir Next, sans-serif;
+}
+
 
 .logo{
     float: left;
@@ -136,6 +142,7 @@ button {
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
     cursor: pointer;
+	font-family: Avenir Next, sans-serif;
 }
 
 button:active {
@@ -182,6 +189,7 @@ input {
 	width: 768px;
 	max-width: 100%;
 	min-height: 480px;
+	margin: 2em auto;
 }
 
 .form-container {
@@ -357,6 +365,7 @@ footer {
 	padding: 1rem;
 	border-top-left-radius: 11px;
 	border-top-right-radius: 11px;
+	color: black;
 }
   
 .card__header h1,
@@ -408,4 +417,23 @@ footer {
 
 .passwordToggle{
 	cursor: pointer;
+}
+
+.reset-container {
+	background-color: #fff;
+	border-radius: 10px;
+  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+			0 10px 10px rgba(0,0,0,0.22);
+	position: relative;
+	width: 400px;
+	max-width: 100%;
+	margin: 2em auto;
+	padding: 15px;
+}
+
+.card img{
+	margin-top: 1em;
+	max-width: 300px;
+	max-height: 400px;
+	border-radius: 11px;
 }

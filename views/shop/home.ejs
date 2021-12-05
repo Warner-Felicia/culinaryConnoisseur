@@ -10,21 +10,7 @@
     <link rel="stylesheet" href="/css/login.css">
 </head>
 
-<header>
-    <button id="side-menu-toggle">Menu</button>
-    <div class="nav_container">
-      <nav class="main-header_nav">
-        <ul>
-            <a href="#home"><img src="images/CulinaryLogo.png" alt="logo" class="logo"></a>
-            <li><a action="/signInUp" href="/signInUp">Login</a></li>
-            <li><a href="#">All Recipes</a></li>
-            <li><a href="#">User's Recipes</a></li>
-            <li><a href="#">Favorite Recipes</a></li>
-            <li><a href="#">Edit Recipe</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<%- include('.././includes/nav.ejs') %>
 
 <body>
     <main>
@@ -99,7 +85,7 @@
                     <p class="product__description"> a list of favorites that you want to come back to</p>
                 </div>
             </a></article>
-            <a href="#"><article class="card product-item">
+            <a href="/admin/add-recipe"><article class="card product-item">
                 <header class="card__header">
                     <h1 class="product__title">Add</h1>
                 </header>

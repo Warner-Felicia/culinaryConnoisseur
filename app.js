@@ -4,10 +4,22 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 const connectionString = process.env.DATABASE_CONNECTION_STRING;
 
 const app = express();
+const oneHour = 1000 * 60 * 60;
+app.use(session({
+    secret: 'secret key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: oneHour
+    }
+}));
+
+
 
 app.use(bodyParser.urlencoded({
    extended: false

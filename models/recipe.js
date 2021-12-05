@@ -8,10 +8,7 @@ const recipeSchema = new Schema({
         required: true
     },
     ingredients: {
-        type: [{
-            quantity: String,
-            name: String
-        }],
+        type: String,
         required: true
     },
     directions: {
@@ -28,18 +25,15 @@ const recipeSchema = new Schema({
         type: String
     },
     note: {
-        type: String,
-        required: true
+        type: String
     },
     tags: {
         type: [String]
     },
     userId: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true
-        //**TO-DO replace type string with code below */
-        // type: Schema.Types.ObjectId,
-        // ref: 'User'
     }
 
 });
