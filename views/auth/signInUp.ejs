@@ -31,6 +31,7 @@
         <input name="password" type="password" placeholder="Password" />
         <input name="securityPhrase" type="text" placeholder="Security Phrase" />
         <input name="passwordHint" type="text" placeholder="Security Phrase Hint" />
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button>Sign Up</button>
       </form>
     </div>
@@ -42,6 +43,7 @@
         <input name="password" type="password" id='password' name="password" placeholder="Password" />
         <div class='passwordToggle'>Show Password</div>
         <a style="font-size: 15px;" action="/reset" href="/reset">Forgot your password?</a>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button class="button">Sign In</button>
       </form>
     </div>
