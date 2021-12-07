@@ -19,11 +19,11 @@
          <div class="edit-user-info">
            <form action="/updateNames" method="post">
              <label class="black-font" for="firstname">First Name</label>
-             <input type="firstname" name="firstname" id="firstname" value="<%= users.firstName %>">
+             <input type="firstname" name="firstname" id="firstname" value="<%= users.firstName %>" required>
              <label class="black-font" for="lastname">Last Name</label>
-             <input type="lastname" name="lastname" id="lastname" value="<%= users.lastName %>">
+             <input type="lastname" name="lastname" id="lastname" value="<%= users.lastName %>" required>
              <label class="black-font" for="email">Email</label>
-             <input type="email" name="email" id="email" value="<%= users.email %>">
+             <input type="email" name="email" id="email" value="<%= users.email %>" required>
              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update User</button>
            </form>
@@ -31,9 +31,9 @@
          <div class="edit-user-password">
            <form action="/updatePassword" method="post">
              <label class="black-font" for="password">Password</label>
-             <input type="password" name="password" id="password" placeholder="Password">
+             <input type="password" name="password" id="password" placeholder="Password" minlength="8" required>
              <label class="black-font" for="confirm-password">Confirm Password</label>
-             <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
+             <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" minlength="8" required>
              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update Password</button>
            </form>
@@ -41,9 +41,9 @@
          <div class="edit-user-securityphrase">
            <form action="/updateSecurityPhrase" method="post">
              <label for="securityPhrase" class="black-font">Security Phrase</label>
-             <input type="text" name="securityPhrase" id="securityPhrase" value="<%= users.securityPhrase %>">
+             <input type="text" name="securityPhrase" id="securityPhrase" value="<%= users.securityPhrase %>" required>
              <label for="phraseHint" class="black-font">Security Hint</label>
-             <input type="text" name="phraseHint" id="phraseHint" value="<%= users.passwordHint %>">
+             <input type="text" name="phraseHint" id="phraseHint" value="<%= users.passwordHint %>" required>
              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update Security Phrase</button>
            </form>

@@ -47,13 +47,13 @@
         <div class=" card__actions">
           <form action="/addFavorite" method="POST">
             <input type="hidden" value="<%= recipe._id %>" name="recipeId">
-            <input type="hidden" name="_csrf" value="">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit">Add to Favorites</button>
           </form>
               <a href="/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
               <form action="/recipe-delete" method="POST">
                 <input type="hidden" value="<%= recipe._id %>" name="recipeId">
-                <input type="hidden" name="_csrf" value="">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button class="btn" type="submit">Delete</button>
               </form>
         </div>
