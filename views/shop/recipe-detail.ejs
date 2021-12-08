@@ -57,8 +57,8 @@
                   <button class="btn" type="submit">Add to Favorites</button>
                 </form>
                 <a href="/admin/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
-                <form action="/recipe-delete" method="POST">
-                  <input type="hidden" value="<%= recipe._id %>" name="recipeId">
+                <form action="/admin/delete-recipe" method="POST">
+                  <input type="hidden" name="recipeId" value="<%= recipe._id %>">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <button class="btn" type="submit">Delete</button>
                 </form>

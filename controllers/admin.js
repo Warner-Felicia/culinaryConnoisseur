@@ -134,7 +134,7 @@ module.exports.postDeleteRecipe = (req, res, nex) => {
     res.redirect('/signInUp');
   }
   const recipeId = req.body.recipeId;
-  Recipe.findByIdAndRemove(recipeId)
+  Recipe.deleteOne({ _id: recipeId })
     .then(() => {
       res.redirect('/UserRecipes');
     })
