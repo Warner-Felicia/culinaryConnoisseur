@@ -15,14 +15,15 @@
 
   <main>
     <% if (recipes.length > 0) { %>
+      <h1>Your Own Recipes</h1>
       <div class="grid">
+        <% recipes.forEach(recipe => { %>
         <article class="card product-item">
+          <a href='/recipe/<%=recipe._id%>'></a>
           <header class="card__header">
-            <h1>Your Own Recipes</h1></header>
-            <% recipes.forEach(recipe => { %>
-            <a href='/recipe/<%=recipe._id%>'>
-              <h2><%= recipe.title %></h2>
-              <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
+            <h2 class="card_content"><%= recipe.title %></h2>
+          </header>
+          <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
               <% if (recipe.time) { %>
               <h2>Time: <%= recipe.time %></h2>
               <% } %>
