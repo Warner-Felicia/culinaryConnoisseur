@@ -15,29 +15,33 @@
 
   <main>
     <% if (recipes.length > 0) { %>
-    <h1>Recipes</h1>
-    <% recipes.forEach(recipe => { %>
-    <a href='/recipe/<%=recipe._id%>'>
-      <h2><%= recipe.title %></h2>
-      <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
-      <% if (recipe.time) { %>
-      <h2>Time: <%= recipe.time %></h2>
-      <% } %>
-      <% if (recipe.servings) { %>
-      <h2>Servings: <%= recipe.servings %></h2>
-      <% } %>
-      <% if (recipe.note) { %>
-      <p>Note: <%= recipe.note %></p>
-      <% } %>
-      <% if (recipe.tags.length > 0) { %>
-      <p>Tags: <%= recipe.tags.join(', ') %></p>
-      <% } %>
-    </a>
-    <% }) %>
-    <% } else { %>
-    <h1>Shame on you! You haven't added any recipes!</h1>
-    <% } %>
-
+      <div class="grid">
+        <article class="card product-item">
+          <header class="card__header">
+            <h1>Your Own Recipes</h1></header>
+            <% recipes.forEach(recipe => { %>
+            <a href='/recipe/<%=recipe._id%>'>
+              <h2><%= recipe.title %></h2>
+              <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
+              <% if (recipe.time) { %>
+              <h2>Time: <%= recipe.time %></h2>
+              <% } %>
+              <% if (recipe.servings) { %>
+              <h2>Servings: <%= recipe.servings %></h2>
+              <% } %>
+              <% if (recipe.note) { %>
+              <p>Note: <%= recipe.note %></p>
+              <% } %>
+              <% if (recipe.tags.length > 0) { %>
+              <p>Tags: <%= recipe.tags.join(', ') %></p>
+              <% } %>
+            </a>
+            <% }) %>
+            <% } else { %>
+            <h1>Shame on you! You haven't added any recipes!</h1>
+            <% } %>
+        </article>
+      </div>
   </main>
 </body>
 
