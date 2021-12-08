@@ -37,6 +37,14 @@
               <p>Tags: <%= recipe.tags.join(', ') %></p>
               <% } %>
             </a>
+            <div class=" card__actions">
+              <a href="/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
+              <form action="/admin/delete-recipe" method="POST">
+                <input type="hidden" value="<%= recipe._id %>" name="recipeId">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button class="btn" type="submit">Delete</button>
+              </form>
+            </div>
             <% }) %>
             <% } else { %>
             <h1>Shame on you! You haven't added any recipes!</h1>

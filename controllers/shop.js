@@ -51,9 +51,6 @@ exports.getRecipes = (req, res, next) => {
     }
     const user = req.session.isLoggedIn;
     
-
-
-
     Recipe.find()
         .then(recipes => {
             request('https://www.themealdb.com/api/json/v1/1/random.php', {json: true}, (err, resp, body) => {

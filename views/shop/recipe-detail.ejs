@@ -21,27 +21,37 @@
             <%= recipe.title %>
           </h1>
         </header>
+        <% if (recipe.imageUrl) { %>
         <div class="recipe_image">
           <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>">
         </div>
+        <% } %>
         <div class="card_content">
+          <% if (recipe.time) { %>
           <h2 class="recipe_time">
-            <%= `${recipe.time} minutes` %>
+            <%= `Time: ${recipe.time} minutes` %>
           </h2>
+          <% } %>
+          <% if (recipe.servings) { %>
           <h2 class="recipe_servings">
-            <%= `${recipe.servings} servings` %>
+            <%= `Servings: ${recipe.servings}` %>
           </h2>
+          <% } %>
           <h3>Ingredients</h3>
           <p><%= recipe.ingredients %></p>
           <h3>Directions</h3>
           <p><%= recipe.directions %></p>
+          <% if (recipe.note) { %>
           <h3>Notes</h3>
+          <% } %>
           <p>
             <%= recipe.notes %>
           </p>
+          <% if (recipe.tags.length > 0) { %>
           <h3>Tags</h3>
           <p>
             <%= recipe.tags.join(", ") %></p>
+          <% } %>
         </div>
         <!-- TODO: If recipe.userId == currentUser._id, allow edit/delete -->
         <div class=" card__actions">
@@ -50,15 +60,10 @@
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit">Add to Favorites</button>
           </form>
-              <a href="/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
-              <form action="/admin/delete-recipe" method="POST">
-                <input type="hidden" value="<%= recipe._id %>" name="recipeId">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button class="btn" type="submit">Delete</button>
-              </form>
         </div>
       </article>
     </div>
   </main>
 </body>
+
 </html>
