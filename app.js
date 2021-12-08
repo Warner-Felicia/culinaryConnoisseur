@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const csrf = require('csurf');
 
-const MONGODB_URI = process.env.MONGODB_URL;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 const cors = require('cors');
 
@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({
    extended: false
  }));
 
+const PORT = process.env.PORT || 5000;
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -67,14 +68,16 @@ const options = {
     family: 4
 };
 
-const PORT = MONGODB_URI || 5000;
+//const PORT = MONGODB_URI || 5000;
+const MONGODB_URL = process.env.MONGODB_URL || MONGODB_URI;
                         
 mongoose
   .connect(
-    PORT, options
+      MONGODB_URL
+    //PORT, options
   )
   .then(result => {
-    app.listen(5000);
+    app.listen(PORT);
   })
   .catch(err => {
     console.log(err);
