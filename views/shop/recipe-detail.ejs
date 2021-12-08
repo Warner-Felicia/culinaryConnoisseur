@@ -32,16 +32,16 @@
             <%= `${recipe.servings} servings` %>
           </h2>
           <h3>Ingredients</h3>
-          <p><% recipe.ingredients %></p>
+          <p><%= recipe.ingredients %></p>
           <h3>Directions</h3>
-          <p><% recipe.directions %></p>
+          <p><%= recipe.directions %></p>
           <h3>Notes</h3>
           <p>
-            <% recipe.note %>
+            <%= recipe.notes %>
           </p>
           <h3>Tags</h3>
           <p>
-            <% recipe.tags.join(", ") %></p>
+            <%= recipe.tags.join(", ") %></p>
         </div>
         <!-- TODO: If recipe.userId == currentUser._id, allow edit/delete -->
         <div class=" card__actions">
