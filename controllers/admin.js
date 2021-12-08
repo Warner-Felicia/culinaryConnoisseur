@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator');
+
 const Recipe = require('../models/recipe');
 
 exports.getEditRecipe = (req, res, next) => {
@@ -31,7 +33,7 @@ exports.postEditRecipe = (req, res, next) => {
   const updatedServings = req.body.servings;
   //**TO-DO replace imageUrl with file path */
   const updatedImageUrl = req.body.imageUrl;
-  const updatedNote = req.body.note;
+  const updatedNotes = req.body.notes;
   const updatedTags = req.body.tags;
   //**TO-DO replace userId with session user id */
   const updatedIngredients = [];
@@ -54,7 +56,7 @@ exports.postEditRecipe = (req, res, next) => {
       recipe.time = updatedTime;
       recipe.servings = updatedServings;
       recipe.imageUrl = updatedImageUrl;
-      recipe.note = updatedNote;
+      recipe.notes = updatedNotes;
       recipe.tags = updatedTagsArray;
 
       return recipe.save();
@@ -71,8 +73,9 @@ exports.postEditRecipe = (req, res, next) => {
 
 exports.postAddRecipe = (req, res, next) => {
   if (!req.session.isLoggedIn) {
-    res.redirect('/signInUp');
+    return res.redirect('/signInUp');
   }
+  const errors = validationResult(req);
   const title = req.body.title;
   const ingredients = req.body.ingredients;
   const directions = req.body.directions;
@@ -80,10 +83,31 @@ exports.postAddRecipe = (req, res, next) => {
   const servings = req.body.servings;
   //**TO-DO replace imageUrl with file path */
   const imageUrl = req.body.imageUrl;
-  const note = req.body.note;
+  const notes = req.body.notes;
   const tags = req.body.tags;
   const userId = req.body.userId;
   const tagsArray = tags ? tags.split(', ') : undefined;
+  if(!errors.isEmpty()) {
+    return res.status(422).render('admin/edit-recipe', {
+      title: 'Add a Recipe',
+      path: '/admin/add-recipe',
+      editing: false,
+      hasError: true,
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+      userId: userId,
+      recipe: {
+        title: title,
+        ingredients: ingredients,
+        directions: directions,
+        time: time,
+        servings: servings,
+        imageUrl: imageUrl,
+        notes: notes,
+        tags: tags
+      }
+    });
+  }
 
   const recipe = new Recipe({
     title: title,
@@ -92,17 +116,17 @@ exports.postAddRecipe = (req, res, next) => {
     time: time,
     servings: servings,
     imageUrl: imageUrl,
-    note: note,
+    notes: notes,
     tags: tagsArray,
     userId: userId
   });
   recipe.save()
     .then(result => {
       console.log("Successfully saved recipe!");
-      res.render('shop/recipeDetails', {
+      res.render('shop/recipe-detail', {
         recipe: recipe,
         title: recipe.title,
-        path: '/recipes'
+        path: '/recipes',
       });
     })
     .catch(err => console.log(err));
@@ -121,7 +145,7 @@ module.exports.postDeleteRecipe = (req, res, nex) => {
 
 exports.getAddRecipe = (req, res, next) => {
   if (!req.session.isLoggedIn) {
-    res.redirect('/signInUp');
+    return res.redirect('/signInUp');
 }
   const userId = req.session.userId;
   res.render('admin/edit-recipe', {

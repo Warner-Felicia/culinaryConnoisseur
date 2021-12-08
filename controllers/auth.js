@@ -1,11 +1,19 @@
+const {
+    validationResult
+} = require('express-validator');
+
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 exports.getSignInUp = (req, res, next) => {
-
     res.render('auth/signInUp', {
         pageTitle: 'Log In',
-        path: '/auth/login'
+        path: '/auth/login',
+        hasError: false,
+        errorMessage: null,
+        validationErrors: [],
+        errorMessage2: null
+
     });
 };
 
@@ -20,24 +28,45 @@ exports.postSignUp = (req, res, next) => {
     if (!userName) {
         userName = email.split('@')[0];
     }
-    if(User.findOne({ email: email })){
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).render('auth/signInUp', {
+            pageTitle: 'Log In',
+            path: '/auth/login',
+            hasError: true,
+            errorMessage: errors.array()[0].msg,
+            errorMessage2: null,
+            validationErrors: errors.array(),
+            user: {
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                userName: userName,
+                securityPhrase: securityPhrase,
+                passwordHint: passwordHint
+            }
+        });
+    }
+    if (User.findOne({
+            email: email
+        })) {
         console.log('User already exists');
         res.redirect('/signInUp');
     }
-    
+
     const user = new User({
         email: email,
         firstName: firstName,
         lastName: lastName,
         password: bcrypt.hashSync(password, 10),
         userName: userName,
-        securityPhrase: securityPhrase,
+        securityPhrase: bcrypt.hashSync(securityPhrase, 10),
         passwordHint: passwordHint
     });
     user.save()
         .then(result => {
             console.log('User created');
-            res.render('home');
+            res.render('shop/home');
         })
         .catch(err => console.log(err));
 
@@ -46,9 +75,24 @@ exports.postSignUp = (req, res, next) => {
 exports.postLogIn = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    User.findOne({ email: email })
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).render('auth/signInUp', {
+            pageTitle: 'Log In',
+            path: '/auth/login',
+            hasError: true,
+            errorMessage: null,
+            errorMessage2: errors.array()[0].msg,
+            validationErrors: errors.array(),
+            user: {
+                email: email,
+            }
+        });
+    }
+    User.findOne({
+            email: email
+        })
         .then(user => {
-            console.log(user);
             if (!user) {
                 console.log('User not found');
                 return res.redirect('/signInUp');
@@ -67,70 +111,122 @@ exports.postLogIn = (req, res, next) => {
 };
 
 exports.getReset = (req, res, next) => {
-        res.render('auth/passwordReset', {
+    res.render('auth/passwordReset', {
         pageTitle: 'Password Reset',
         path: '/auth/reset',
-        hint: false
+        hint: false,
+        hasError: false,
+        errorMessage: null,
+        valdiationErrors: []
     });
 };
 
 exports.postShowHint = (req, res, next) => {
     const email = req.body.email;
-    User.find({ email: email })
-    .then(user => {
-        res.render('auth/passwordReset', {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).render('auth/passwordReset', {
             pageTitle: 'Password Reset',
             path: '/auth/reset',
-            hint: true,
-            user: user[0]
+            hint: false,
+            hasError: true,
+            errorMessage: errors.array()[0].msg,
+            validationErrors: errors.array(),
+            user: {
+                email: email,
+            }
         });
-    })
-    .catch(err => console.log(err));
+    }
+    User.find({
+            email: email
+        })
+        .then(user => {
+            res.render('auth/passwordReset', {
+                pageTitle: 'Password Reset',
+                path: '/auth/reset',
+                hint: true,
+                hasError: false,
+                errorMessage: null,
+                validationErrors: [],
+                user: user[0]
+            });
+        })
+        .catch(err => console.log(err));
 };
 
 exports.postReset = (req, res, next) => {
     const email = req.body.email;
     const securityPhrase = req.body.securityPhrase;
-    User.findOne({ email: email })
-    .then(user => {
-        if(user.securityPhrase !== securityPhrase) {
-            res.redirect('/reset');
-        } else {
-            res.redirect('/preferences');
-        }
-        
-    })
-    .catch(err => console.log(err));
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).render('auth/passwordReset', {
+            pageTitle: 'Password Reset',
+            path: '/auth/reset',
+            hint: true,
+            hasError: true,
+            errorMessage: errors.array()[0].msg,
+            validationErrors: errors.array(),
+            user: {
+                email: email,
+            }
+        });
+    }
+    User.findOne({
+            email: email
+        })
+        .then(user => {
+            if (bcrypt.compareSync(securityPhrase, user.securityPhrase)) {
+                req.session.isLoggedIn = true;
+                req.session.email = user.email;
+                req.session.userId = user._id;
+                res.redirect('/preferences');
+
+            } else {
+                res.redirect('/preferences');
+                res.status(422).render('auth/passwordReset', {
+                    pageTitle: 'Password Reset',
+                    path: '/auth/reset',
+                    hint: true,
+                    hasError: true,
+                    errorMessage: 'Security phrase in incorrect',
+                    validationErrors: errors.array(),
+                    user: {
+                        email: email,
+                    }
+                });
+            }
+
+        })
+        .catch(err => console.log(err));
 };
 
-
-
 exports.postDeleteUser = (req, res, next) => {
-    //**TO-DO replace hard-coded userId with session user */
-    const userId = '618d951db51a9ea1580b80af';
+    const userId = req.session.userId;
     User.findByIdAndRemove(userId)
-    .then(() => {
-        //**TO-DO decide where we really want this to go */
-        res.redirect('/');
-    })
-    .catch(err => console.log(err));
+        .then(() => {
+            //**TO-DO decide where we really want this to go */
+            res.redirect('/');
+        })
+        .catch(err => console.log(err));
 };
 
 exports.getPreferences = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/signInUp');
+        return res.redirect('/signInUp');
     }
-    const user = req.session.isLoggedIn;
-    console.log(user);
+    // const user = req.session.isLoggedIn;
+    // console.log(user);
     User.findById(req.session.userId)
-        .then(users => {
-            const user = req.session.isLoggedIn;
-            console.log(user);
+        .then(user => {
             res.render('auth/preferences', {
                 pageTitle: 'Preferences',
                 path: '/auth/preferences',
-                users: users,
-                user: user
+                users: user,
+                hasErrors: false,
+                errorMessage: null,
+                errorMessage2: null,
+                errorMessage3: null
+                // user: user
             });
         })
         .catch(err => console.log(err));
@@ -141,48 +237,166 @@ exports.postUpdateNames = (req, res, next) => {
     const lastName = req.body.lastname;
     const email = req.body.email;
     const userId = req.session.userId;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).render('auth/preferences', {
+            pageTitle: 'Preferences',
+            path: '/auth/preferences',
+            users: {
+                firstName: firstName,
+                lastName: lastName,
+                email: email
+            },
+            hasErrors: true,
+            errorMessage: errors.array()[0].msg,
+            // user: user
+        });
+    }
+    User.findOne({
+            email: email
+        })
+        .then(user => {
+            if (user._id.toString() !== userId) {
+                return res.status(422).render('auth/preferences', {
+                    pageTitle: 'Preferences',
+                    path: '/auth/preferences',
+                    users: {
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email
+                    },
+                    hasErrors: true,
+                    errorMessage: 'That email address is already associated with another account',
+                    // user: user
+                });
+            }
+        })
+        .catch(err => console.log(err));
     User.findByIdAndUpdate(userId, {
-        firstName: firstName,
-        lastName: lastName,
-        email: email
-    })
-    .then(() => {
-        console.log('User updated');
-        res.redirect('/preferences');
-    })
-    .catch(err => console.log(err));
-}
+            firstName: firstName,
+            lastName: lastName,
+            email: email
+        })
+        .then(() => {
+            console.log('User updated');
+            return res.status(422).render('auth/preferences', {
+                pageTitle: 'Preferences',
+                path: '/auth/preferences',
+                users: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email
+                },
+                hasErrors: false,
+                errorMessage: 'Your account has been updated',
+                errorMessage2: null,
+                errorMessage3: null
+                // user: user
+            });
+        })
+        .catch(err => console.log(err));
+};
 
 exports.postUpdatePassword = (req, res, next) => {
     const password = req.body.password;
     const userId = req.session.userId;
-    User.findByIdAndUpdate(userId, {
-        password: bcrypt.hashSync(password, 10)
-    })
-    .then(() => {
-        console.log("Password updated");
-        res.redirect('/preferences');
-    })
-    .catch(err => console.log(err));
-}
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        User.findById(userId)
+            .then(user => {
+                return user;
+            }).then(user => {
+                return res.status(422).render('auth/preferences', {
+                    pageTitle: 'Preferences',
+                    path: '/auth/preferences',
+                    users: {
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email
+                    },
+                    hasErrors: true,
+                    errorMessage: null,
+                    errorMessage2: errors.array()[0].msg,
+                    errorMessage3: null
+                    // user: user
+                });
+            })
+            .catch(err => console.log(err));
+    } else {
+        User.findByIdAndUpdate(userId, {
+                password: bcrypt.hashSync(password, 10)
+            })
+            .then(() => {
+                return User.findById(userId);
+            })
+            .then(user => {
+                return res.status(422).render('auth/preferences', {
+                    pageTitle: 'Preferences',
+                    path: '/auth/preferences',
+                    users: {
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email
+                    },
+                    hasErrors: true,
+                    errorMessage: null,
+                    errorMessage2: 'Password updated',
+                    errorMessage3: null
+                    // user: user
+                });
+            })
+            .catch(err => console.log(err));
+    }
+};
 
 exports.postUpdateSecurityPhrase = (req, res, next) => {
     const securityPhrase = req.body.securityPhrase;
     const passwordHint = req.body.phraseHint;
     const userId = req.session.userId;
-    User.findByIdAndUpdate(userId, {
-        securityPhrase: securityPhrase,
-        passwordHint: passwordHint
-    })
-    .then(() => {
-        res.redirect('/preferences');
-    })
-    .catch(err => console.log(err));
-}
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        User.findById(userId)
+        .then(user => {
+            return res.status(422).render('auth/preferences', {
+                pageTitle: 'Preferences',
+                path: '/auth/preferences',
+                users: user,
+                hasErrors: true,
+                errorMessage: null,
+                errorMessage2: null,
+                errorMessage3: errors.array()[0].msg,
+                // user: user
+            });
+        })
+        .catch(err => console.log(err));        
+    } else {
+        User.findByIdAndUpdate(userId, {
+            securityPhrase: bcrypt.hashSync(securityPhrase, 10),
+            passwordHint: passwordHint
+        })
+        .then(() => {
+            return User.findById(userId);
+        })
+        .then(user => {
+            console.log(user);
+            return res.status(422).render('auth/preferences', {
+                pageTitle: 'Preferences',
+                path: '/auth/preferences',
+                users: user,
+                hasErrors: true,
+                errorMessage: null,
+                errorMessage2: null,
+                errorMessage3: 'Security phrase and/or hint updated',
+                // user: user
+            });
+        })
+        .catch(err => console.log(err));
+    }
+};
 
 exports.postLogout = (req, res, next) => {
     req.session.destroy(err => {
         console.log(err);
         res.redirect('/signInUp');
-    })
-}
+    });
+};
