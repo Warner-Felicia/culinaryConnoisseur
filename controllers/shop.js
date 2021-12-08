@@ -3,11 +3,11 @@ const User = require('../models/user');
 const Recipe = require('../models/recipe');
 
 const mongoose = require('mongoose');
-
+const request = require('request');
 
 exports.getIndex = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/signInUp');
+        return res.redirect('/signInUp');
     }
     const user = req.session.isLoggedIn;
     res.render('shop/home', {
@@ -21,7 +21,7 @@ exports.getIndex = (req, res, next) => {
 exports.postAddFavorite = (req, res, next) => {
     if (!req.session.isLoggedIn) {
         res.redirect('/signInUp');
-      }
+    }
     const recipeId = req.body.recipeId;
     const userId = req.session.userId;
     User.findById(userId)
@@ -36,7 +36,7 @@ exports.postAddFavorite = (req, res, next) => {
 exports.postDeleteFavorite = (req, res, next) => {
     if (!req.session.isLoggedIn) {
         res.redirect('/signInUp');
-      }
+    }
     const recipeId = req.body.recipeId;
     const userId = req.session.userId;
     User.findById(userId)
@@ -47,24 +47,37 @@ exports.postDeleteFavorite = (req, res, next) => {
 
 exports.getRecipes = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/signInUp');
+        return res.redirect('/signInUp');
     }
     const user = req.session.isLoggedIn;
+    
+
+
+
     Recipe.find()
         .then(recipes => {
-            res.render('shop/recipeList', {
+            request('https://www.themealdb.com/api/json/v1/1/random.php', {json: true}, (err, resp, body) => {
+                if (err) {
+                    return console.log(err);
+                }
+
+                
+                res.render('shop/recipeList', {
                 pageTitle: 'Recipes',
                 path: '/recipe',
                 recipes: recipes,
-                user: user
+                user: user,
+                randomRecipe: body
             });
+            });
+            
         })
         .catch(err => console.log(err));
 };
 
 exports.getRecipe = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/signInUp');
+        return res.redirect('/signInUp');
     }
     const recipeId = req.params.recipeId;
     const user = req.session.isLoggedIn;
@@ -88,7 +101,7 @@ exports.getRecipe = (req, res, next) => {
 exports.getFavorites = (req, res, next) => {
     if (!req.session.isLoggedIn) {
         res.redirect('/signInUp');
-      }
+    }
     const userId = req.session.userId;
     const recipes = [];
     User.findById(userId).populate('favorites')
@@ -109,7 +122,7 @@ exports.getFavorites = (req, res, next) => {
 exports.getUserRecipes = (req, res, next) => {
     if (!req.session.isLoggedIn) {
         res.redirect('/signInUp');
-      }
+    }
     const userId = req.session.userId;
     Recipe.find({
             userId: userId

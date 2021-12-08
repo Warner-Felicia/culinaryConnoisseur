@@ -16,6 +16,17 @@
   <main>
     <% if (recipes.length > 0) { %>
     <h1>Recipes</h1>
+    <div class="random-recipe">
+      <header class="card__header">
+        <h2 class="card_content"> Random Recipe: <%= randomRecipe.meals[0].strMeal %></h2></header>
+      <table>
+          <tr>
+            <th><img src='<%= randomRecipe.meals[0].strMealThumb %>' alt=""></th>
+            <th><%= randomRecipe.meals[0].strInstructions %></th>
+          </tr>
+      </table>
+      
+    </div>
     <div class="grid">
       <% recipes.forEach(recipe => { %>
         <article class="card product-item">

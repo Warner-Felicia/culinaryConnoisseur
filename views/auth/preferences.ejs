@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Culinary Connoisseur</title>
+    <link href="/css/login.css" rel="stylesheet" type="text/css">
     <link href="/css/preferences.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -16,33 +17,42 @@
      <h1 class="black-font">Preferences</h1>
        <div>
          <div class="edit-user-info">
+          <% if (errorMessage) { %>
+            <p class='user-message'><%= errorMessage %></p>
+          <% } %>
            <form action="/updateNames" method="post">
              <label class="black-font" for="firstname">First Name</label>
-             <input type="firstname" name="firstname" id="firstname" value="<%= users.firstName %>">
+             <input type="firstname" name="firstname" id="firstname" value="<%= users.firstName %>" required>
              <label class="black-font" for="lastname">Last Name</label>
-             <input type="lastname" name="lastname" id="lastname" value="<%= users.lastName %>">
+             <input type="lastname" name="lastname" id="lastname" value="<%= users.lastName %>" required>
              <label class="black-font" for="email">Email</label>
-             <input type="email" name="email" id="email" value="<%= users.email %>">
+             <input type="email" name="email" id="email" value="<%= users.email %>" required>
              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update User</button>
            </form>
          </div>
          <div class="edit-user-password">
+          <% if (errorMessage2) { %>
+            <p class='user-message'><%= errorMessage2 %></p>
+          <% } %>
            <form action="/updatePassword" method="post">
              <label class="black-font" for="password">Password</label>
-             <input type="password" name="password" id="password" placeholder="Password">
+             <input type="password" name="password" id="password" placeholder="Password" minlength="8" required>
              <label class="black-font" for="confirm-password">Confirm Password</label>
-             <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
+             <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" minlength="8" required>
              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update Password</button>
            </form>
          </div>
          <div class="edit-user-securityphrase">
+          <% if (errorMessage3) { %>
+            <p class='user-message'><%= errorMessage3 %></p>
+          <% } %>
            <form action="/updateSecurityPhrase" method="post">
              <label for="securityPhrase" class="black-font">Security Phrase</label>
-             <input type="text" name="securityPhrase" id="securityPhrase" value="<%= users.securityPhrase %>">
+             <input type="text" name="securityPhrase" id="securityPhrase" required>
              <label for="phraseHint" class="black-font">Security Hint</label>
-             <input type="text" name="phraseHint" id="phraseHint" value="<%= users.passwordHint %>">
+             <input type="text" name="phraseHint" id="phraseHint" value="<%= users.passwordHint %>" required>
              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
              <button type="submit">Update Security Phrase</button>
            </form>
