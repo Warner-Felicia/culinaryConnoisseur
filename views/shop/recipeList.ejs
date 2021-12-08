@@ -16,11 +16,15 @@
   <main>
     <% if (recipes.length > 0) { %>
     <h1>Recipes</h1>
-    <h2>Random Recipe:</h2>
     <div class="random-recipe">
-      <h2><%= randomRecipe.meals[0].strMeal %></h2>
-      <img src='<%= randomRecipe.meals[0].strMealThumb %>' alt="">
-      <p><%= randomRecipe.meals[0].strInstructions %></p>
+      <header class="card__header">
+        <h2 class="card_content"> Random Recipe: <%= randomRecipe.meals[0].strMeal %></h2></header>
+      <table>
+          <tr>
+            <th><img src='<%= randomRecipe.meals[0].strMealThumb %>' alt=""></th>
+            <th><%= randomRecipe.meals[0].strInstructions %></th>
+          </tr>
+      </table>
       
     </div>
     <div class="grid">
