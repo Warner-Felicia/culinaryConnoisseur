@@ -46,34 +46,30 @@ exports.postDeleteFavorite = (req, res, next) => {
 };
 
 exports.getRecipes = (req, res, next) => {
-  if (!req.session.isLoggedIn) {
-    return res.redirect('/signInUp');
-  }
-  const user = req.session.isLoggedIn;
+    if (!req.session.isLoggedIn) {
+        return res.redirect('/signInUp');
+    }
+    const user = req.session.isLoggedIn;
+    
+    Recipe.find()
+        .then(recipes => {
+            request('https://www.themealdb.com/api/json/v1/1/random.php', {json: true}, (err, resp, body) => {
+                if (err) {
+                    return console.log(err);
+                }
 
-
-
-
-  Recipe.find()
-    .then(recipes => {
-      request('https://www.themealdb.com/api/json/v1/1/random.php', { json: true }, (err, resp, body) => {
-        if (err) {
-          return console.log(err);
-        }
-
-
-        res.render('shop/recipeList', {
-          pageTitle: 'Recipes',
-          path: '/recipe',
-          recipes: recipes,
-          user: user,
-          randomRecipe: body
-        });
-      });
-
-    })
-    .catch(err => console.log(err));
-};
+                
+                res.render('shop/recipeList', {
+                pageTitle: 'Recipes',
+                path: '/recipe',
+                recipes: recipes,
+                user: user,
+                randomRecipe: body
+            });
+            });
+            
+        })
+        .catch(err => console.log(err));
 
 exports.getRecipe = (req, res, next) => {
   if (!req.session.isLoggedIn) {

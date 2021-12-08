@@ -15,33 +15,34 @@
 
   <main>
     <% if (recipes.length > 0) { %>
-      <h1>Your Favorite Recipes</h1>
-      <div class="grid">
-        <% recipes.forEach(recipe => { %>
-        <article class="card product-item">
-          <a class="card" href='/recipe/<%=recipe._id%>'>
-            <header class="card__header">
-              <h2 class="card_content"><%= recipe.title %></h2></header>
-              <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
-              <% if (recipe.time) { %>
-              <h2>Time: <%= recipe.time %></h2>
-              <% } %>
-              <% if (recipe.servings) { %>
-              <h2>Servings: <%= recipe.servings %></h2>
-              <% } %>
-              <% if (recipe.note) { %>
-              <p>Note: <%= recipe.note %></p>
-              <% } %>
-              <% if (recipe.tags.length > 0) { %>
-              <p>Tags: <%= recipe.tags.join(', ') %></p>
-              <% } %>
-            </a>
-        </article>
-        <% }) %>
-      </div>
-      <% } else { %>
-        <h1>You have no favorites.</h1>
-        <% } %>
+    <h1>Your Favorite Recipes</h1>
+    <div class="grid">
+      <% recipes.forEach(recipe => { %>
+      <article class="card product-item">
+        <a class="card" href='/recipe/<%=recipe._id%>'>
+          <header class="card__header">
+            <h2 class="card_content"><%= recipe.title %></h2>
+          </header>
+          <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
+          <% if (recipe.time) { %>
+          <h2>Time: <%= recipe.time %></h2>
+          <% } %>
+          <% if (recipe.servings) { %>
+          <h2>Servings: <%= recipe.servings %></h2>
+          <% } %>
+          <% if (recipe.note) { %>
+          <p>Note: <%= recipe.note %></p>
+          <% } %>
+          <% if (recipe.tags.length > 0) { %>
+          <p>Tags: <%= recipe.tags.join(', ') %></p>
+          <% } %>
+        </a>
+      </article>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <h1>You have no favorites.</h1>
+    <% } %>
   </main>
 </body>
 

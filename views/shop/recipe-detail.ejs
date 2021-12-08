@@ -14,57 +14,58 @@
 
 <%- include('.././includes/nav.ejs') %>
 
-  <body>
-    <main>
-      <div class="grid">
-        <article class="card product-item">
-          <header class="card__header">
-            <h1 class="recipe_title">
-              <%= recipe.title %>
-            </h1>
-          </header>
-          <div class="recipe_image">
-            <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>">
-          </div>
-          <div class="card_content">
-            <h2 class="recipe_time">
-              <%= `${recipe.time} minutes` %>
-            </h2>
-            <h2 class="recipe_servings">
-              <%= `${recipe.servings} servings` %>
-            </h2>
-            <h3>Ingredients</h3>
-            <p>
-              <%= recipe.ingredients %>
-            </p>
-            <h3>Directions</h3>
-            <p>
-              <%= recipe.directions %>
-            </p>
-            <h3>Notes</h3>
-            <p>
-              <%= recipe.notes %>
-            </p>
-            <h3>Tags</h3>
-            <p>
-              <%= recipe.tags.join(", ") %></p>
+<body>
+  <main>
+    <div class="grid">
+      <article class="card product-item">
+        <header class="card__header">
+          <h1 class="recipe_title">
+            <%= recipe.title %>
+          </h1>
+        </header>
+        <% if (recipe.imageUrl) { %>
+        <div class="recipe_image">
+          <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>">
+        </div>
+        <% } %>
+        <div class="card_content">
+          <% if (recipe.time) { %>
+          <h2 class="recipe_time">
+            <%= `Time: ${recipe.time} minutes` %>
+          </h2>
+          <% } %>
+          <% if (recipe.servings) { %>
+          <h2 class="recipe_servings">
+            <%= `Servings: ${recipe.servings}` %>
+          </h2>
+          <% } %>
+          <h3>Ingredients</h3>
+          <p><%= recipe.ingredients %></p>
+          <h3>Directions</h3>
+          <p><%= recipe.directions %></p>
+          <% if (recipe.note) { %>
+          <h3>Notes</h3>
+          <% } %>
+          <p>
+            <%= recipe.notes %>
+          </p>
+          <% if (recipe.tags.length > 0) { %>
+          <h3>Tags</h3>
+          <p>
+            <%= recipe.tags.join(", ") %></p>
+          <% } %>
         </div>
         <!-- TODO: If recipe.userId == currentUser._id, allow edit/delete -->
         <div class=" card__actions">
-                <form action="/addFavorite" method="POST">
-                  <input type="hidden" value="<%= recipe._id %>" name="recipeId">
-                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                  <button class="btn" type="submit">Add to Favorites</button>
-                </form>
-                <a href="/admin/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
-                <form action="/admin/delete-recipe" method="POST">
-                  <input type="hidden" name="recipeId" value="<%= recipe._id %>">
-                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                  <button class="btn" type="submit">Delete</button>
-                </form>
-          </div>
-        </article>
-      </div>
-    </main>
-  </body>
+          <form action="/addFavorite" method="POST">
+            <input type="hidden" value="<%= recipe._id %>" name="recipeId">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit">Add to Favorites</button>
+          </form>
+        </div>
+      </article>
+    </div>
+  </main>
+</body>
+
 </html>

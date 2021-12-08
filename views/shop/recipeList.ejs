@@ -18,41 +18,45 @@
     <h1>Recipes</h1>
     <div class="random-recipe">
       <header class="card__header">
-        <h2 class="card_content"> Random Recipe: <%= randomRecipe.meals[0].strMeal %></h2></header>
+        <h2 class="card_content"> Random Recipe: <%= randomRecipe.meals[0].strMeal %></h2>
+      </header>
       <table>
-          <tr>
-            <th><img src='<%= randomRecipe.meals[0].strMealThumb %>' alt=""></th>
-            <th><%= randomRecipe.meals[0].strInstructions %></th>
-          </tr>
+        <tr>
+          <th><img src='<%= randomRecipe.meals[0].strMealThumb %>' alt=""></th>
+          <th><%= randomRecipe.meals[0].strInstructions %></th>
+        </tr>
       </table>
-      
+
     </div>
     <div class="grid">
       <% recipes.forEach(recipe => { %>
-        <article class="card product-item">
-          <a class="card" href='/recipe/<%=recipe._id%>'>
-            <header class="card__header">
-              <h2 class="card_content"><%= recipe.title %></h2>
-            </header>
-              <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
-              <% if (recipe.time) { %>
-              <h2>Time: <%= recipe.time %></h2>
-              <% } %>
-              <% if (recipe.servings) { %>
-              <h2>Servings: <%= recipe.servings %></h2>
-              <% } %>
-              <% if (recipe.note) { %>
-              <p>Note: <%= recipe.note %></p>
-              <% } %>
-              <% if (recipe.tags.length > 0) { %>
-              <p>Tags: <%= recipe.tags.join(', ') %></p>
-              <% } %>
-            </a>
-          </article>
+      <article class="card product-item">
+        <a class="card" href='/recipe/<%=recipe._id%>'>
+          <header class="card__header">
+            <h2 class="card_content"><%= recipe.title %></h2>
+          </header>
+          <% if (recipe.imageUrl) { %>
+          <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
+          <% } %>
+          <% if (recipe.time) { %>
+          <h2>Time: <%= recipe.time %> minutes</h2>
+          <% } %>
+          <% if (recipe.servings) { %>
+          <h2>Servings: <%= recipe.servings %></h2>
+          <% } %>
+          <% if (recipe.note) { %>
+          <p>Note: <%= recipe.note %></p>
+          <% } %>
+          <% if (recipe.tags.length > 0) { %>
+          <p>Tags: <%= recipe.tags.join(', ') %></p>
+          <% } %>
+        </a>
+      </article>
       <% }) %>
-  </div>
+    </div>
     <% } else { %>
-    <h1>We currently have no recipes to share. Please <a href='#'>add</a> your own or check back later</h1>
+    <h1>We currently have no recipes to share. Please <a href='/admin/add-recipe'>add</a> your own or check back later
+    </h1>
     <% } %>
 
   </main>
