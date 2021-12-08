@@ -191,8 +191,15 @@ input {
 	overflow: hidden;
 	width: 768px;
 	max-width: 100%;
-	min-height: 480px;
+	max-height: 100%;
+	min-height: 550px;
 	margin: 2em auto;
+}
+
+.container .user-message{
+	color: red;
+	margin: 0 ;
+	text-align: center;
 }
 
 .form-container {

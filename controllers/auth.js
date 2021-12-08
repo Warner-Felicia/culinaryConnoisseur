@@ -47,13 +47,29 @@ exports.postSignUp = (req, res, next) => {
             }
         });
     }
-    console.log(email);
-    if (User.findOne({
-            email: email
-        })) {
-        console.log('User already exists');
-        res.redirect('/signInUp');
-    }
+    User.findOne({
+        email: email
+    }).then(user => {
+        if(user) {
+            console.log('User already exists');
+            return res.status(422).render('auth/signInUp', {
+                pageTitle: 'Log In',
+                path: '/auth/login',
+                hasError: true,
+                errorMessage: 'An account with that email already exists',
+                errorMessage2: null,
+                validationErrors: errors.array(),
+                user: {
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    userName: userName,
+                    securityPhrase: securityPhrase,
+                    passwordHint: passwordHint
+                }
+            });;
+        }
+    });        
 
     const user = new User({
         email: email,
@@ -256,6 +272,8 @@ exports.postUpdateNames = (req, res, next) => {
             },
             hasErrors: true,
             errorMessage: errors.array()[0].msg,
+            errorMessage2: null,
+            errorMessage3: null
             // user: user
         });
     }

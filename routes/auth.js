@@ -26,8 +26,6 @@ router.post('/signIn',
     body('password')
         .isString()
         .withMessage('Password is required')
-        .isLength({ min: 8 })
-        .withMessage('Password must be 8 characters long')
         .trim(),
     ],
     authController.postLogIn);
