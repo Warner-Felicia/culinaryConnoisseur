@@ -16,15 +16,17 @@ const recipeSchema = new Schema({
         required: true
     },
     time: {
-        type: String,
+        type: Number,
+        required: true
     },
     servings: {
-        type: String,
+        type: Number,
+        required: true
     },
     imageUrl: {
         type: String
     },
-    note: {
+    notes: {
         type: String
     },
     tags: {

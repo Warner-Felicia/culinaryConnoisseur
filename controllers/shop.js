@@ -5,10 +5,9 @@ const Recipe = require('../models/recipe');
 const mongoose = require('mongoose');
 const request = require('request');
 
-
 exports.getIndex = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/signInUp');
+        return res.redirect('/signInUp');
     }
     const user = req.session.isLoggedIn;
     res.render('shop/home', {
@@ -48,7 +47,7 @@ exports.postDeleteFavorite = (req, res, next) => {
 
 exports.getRecipes = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/signInUp');
+        return res.redirect('/signInUp');
     }
     const user = req.session.isLoggedIn;
     
@@ -78,7 +77,7 @@ exports.getRecipes = (req, res, next) => {
 
 exports.getRecipe = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/signInUp');
+        return res.redirect('/signInUp');
     }
     const recipeId = req.params.recipeId;
     const user = req.session.isLoggedIn;

@@ -183,6 +183,11 @@ input {
     width: 100%;
 }
 
+.user-message {
+	color: rgb(99, 22, 22);
+    text-align: center;
+}
+
 .container {
     background-color: #fff;
     border-radius: 10px;
