@@ -24,35 +24,35 @@
           </h1>
         </header>
         <% if (recipe.imageUrl) { %>
-        <div class="recipe_image">
-          <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>">
-        </div>
+          <div class="recipe_image">
+            <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>">
+          </div>
         <% } %>
         <div class="card_content">
           <% if (recipe.time) { %>
-          <h2 class="recipe_time">
-            <%= `Time: ${recipe.time} minutes` %>
-          </h2>
+            <h2 class="recipe_time">
+              <%= `Time: ${recipe.time} minutes` %>
+            </h2>
           <% } %>
           <% if (recipe.servings) { %>
-          <h2 class="recipe_servings">
-            <%= `Servings: ${recipe.servings}` %>
-          </h2>
+            <h2 class="recipe_servings">
+              <%= `Servings: ${recipe.servings}` %>
+            </h2>
           <% } %>
           <h3>Ingredients</h3>
           <p><%= recipe.ingredients %></p>
           <h3>Directions</h3>
           <p><%= recipe.directions %></p>
           <% if (recipe.note) { %>
-          <h3>Notes</h3>
+            <h3>Notes</h3>
+            <p>
+              <%= recipe.notes %>
+            </p>
           <% } %>
-          <p>
-            <%= recipe.notes %>
-          </p>
           <% if (recipe.tags.length > 0) { %>
-          <h3>Tags</h3>
-          <p>
-            <%= recipe.tags.join(", ") %></p>
+            <h3>Tags</h3>
+            <p>
+              <%= recipe.tags.join(", ") %></p>
           <% } %>
         </div>
         <!-- TODO: If recipe.userId == currentUser._id, allow edit/delete -->

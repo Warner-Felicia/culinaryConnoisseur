@@ -48,7 +48,7 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
-// app.use(errorController.get404);
+app.use(errorController.get404);
 
 mongoose.connect(connectionString)
     .then(result => {
