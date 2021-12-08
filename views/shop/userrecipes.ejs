@@ -24,6 +24,33 @@
             <h2 class="card_content"><%= recipe.title %></h2>
           </header>
           <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
+          <div class="card_content">
+            <% if (recipe.time) { %>
+              <h2 class="recipe_time">
+                <%= `Time: ${recipe.time} minutes` %>
+              </h2>
+            <% } %>
+            <% if (recipe.servings) { %>
+              <h2 class="recipe_servings">
+                <%= `Servings: ${recipe.servings}` %>
+              </h2>
+            <% } %>
+            <h3>Ingredients</h3>
+            <p><%= recipe.ingredients %></p>
+            <h3>Directions</h3>
+            <p><%= recipe.directions %></p>
+            <% if (recipe.note) { %>
+              <h3>Notes</h3>
+              <p>
+                <%= recipe.notes %>
+              </p>
+            <% } %>
+            <% if (recipe.tags.length > 0) { %>
+              <h3>Tags</h3>
+              <p>
+                <%= recipe.tags.join(", ") %></p>
+            <% } %>
+          </div>
               <% if (recipe.time) { %>
               <h2>Time: <%= recipe.time %></h2>
               <% } %>
@@ -38,7 +65,7 @@
               <% } %>
             </a>
             <div class=" card__actions">
-              <a href="/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
+              <a href="/admin/edit-recipe/<%= recipe._id %>?edit=true" class="btn">Edit</a>
               <form action="/admin/delete-recipe" method="POST">
                 <input type="hidden" value="<%= recipe._id %>" name="recipeId">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
