@@ -130,6 +130,7 @@ exports.postAddRecipe = (req, res, next) => {
 };
 
 module.exports.postDeleteRecipe = (req, res, nex) => {
+  console.log('here');
   if (!req.session.isLoggedIn) {
     res.redirect('/signInUp');
   }
