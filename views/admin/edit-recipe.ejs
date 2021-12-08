@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <link href="/css/login.css" rel="stylesheet" type="text/css">
   <title>
     <% if (editing) { recipe.title } else { %>Add Recipe<% } %>
   </title>
@@ -107,7 +108,7 @@
                 <input type="hidden" value="<%= recipe._id %>" name="recipeId">
             <% } %>
 
-            <input type="hidden" name="_csrf" value="">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" name="userId" value="<%= userId %>">
             <button class="btn" type="submit"><% if (editing) { %>Update Recipe<% } else { %>Add Recipe<% } %></button>
         </form>

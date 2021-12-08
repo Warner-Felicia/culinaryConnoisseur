@@ -180,7 +180,6 @@ exports.postReset = (req, res, next) => {
                 req.session.email = user.email;
                 req.session.userId = user._id;
                 res.redirect('/preferences');
-
             } else {
                 res.redirect('/preferences');
                 res.status(422).render('auth/passwordReset', {
@@ -201,10 +200,12 @@ exports.postReset = (req, res, next) => {
 };
 
 exports.postDeleteUser = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const userId = req.session.userId;
     User.findByIdAndRemove(userId)
         .then(() => {
-            //**TO-DO decide where we really want this to go */
             res.redirect('/');
         })
         .catch(err => console.log(err));
@@ -233,6 +234,9 @@ exports.getPreferences = (req, res, next) => {
 };
 
 exports.postUpdateNames = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const firstName = req.body.firstname;
     const lastName = req.body.lastname;
     const email = req.body.email;
@@ -298,6 +302,9 @@ exports.postUpdateNames = (req, res, next) => {
 };
 
 exports.postUpdatePassword = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const password = req.body.password;
     const userId = req.session.userId;
     const errors = validationResult(req);
@@ -350,6 +357,9 @@ exports.postUpdatePassword = (req, res, next) => {
 };
 
 exports.postUpdateSecurityPhrase = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     const securityPhrase = req.body.securityPhrase;
     const passwordHint = req.body.phraseHint;
     const userId = req.session.userId;
@@ -395,6 +405,9 @@ exports.postUpdateSecurityPhrase = (req, res, next) => {
 };
 
 exports.postLogout = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/signInUp');
+    }
     req.session.destroy(err => {
         console.log(err);
         res.redirect('/signInUp');
