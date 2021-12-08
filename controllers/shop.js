@@ -46,30 +46,34 @@ exports.postDeleteFavorite = (req, res, next) => {
 };
 
 exports.getRecipes = (req, res, next) => {
-    if (!req.session.isLoggedIn) {
-        return res.redirect('/signInUp');
-    }
-    const user = req.session.isLoggedIn;
-    
-    Recipe.find()
-        .then(recipes => {
-            request('https://www.themealdb.com/api/json/v1/1/random.php', {json: true}, (err, resp, body) => {
-                if (err) {
-                    return console.log(err);
-                }
+  if (!req.session.isLoggedIn) {
+    return res.redirect('/signInUp');
+  }
+  const user = req.session.isLoggedIn;
 
-                
-                res.render('shop/recipeList', {
-                pageTitle: 'Recipes',
-                path: '/recipe',
-                recipes: recipes,
-                user: user,
-                randomRecipe: body
-            });
-            });
-            
-        })
-        .catch(err => console.log(err));
+  Recipe.find()
+    .then(recipes => {
+      request('https://www.themealdb.com/api/json/v1/1/random.php', {
+        json: true
+      }, (err, resp, body) => {
+        if (err) {
+          return console.log(err);
+        }
+
+
+        res.render('shop/recipeList', {
+          pageTitle: 'Recipes',
+          path: '/recipe',
+          recipes: recipes,
+          user: user,
+          randomRecipe: body
+        });
+      });
+
+    })
+    .catch(err => console.log(err));
+};
+
 
 exports.getRecipe = (req, res, next) => {
   if (!req.session.isLoggedIn) {
@@ -122,8 +126,8 @@ exports.getUserRecipes = (req, res, next) => {
   }
   const userId = req.session.userId;
   Recipe.find({
-    userId: userId
-  })
+      userId: userId
+    })
     .then(recipes => {
       res.render('shop/userrecipes', {
         pageTitle: "userrecipes",
