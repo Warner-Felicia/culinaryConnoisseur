@@ -73,7 +73,7 @@ const MONGODB_URL = process.env.MONGODB_URL || MONGODB_URI;
                         
 mongoose
   .connect(
-      MONGODB_URL
+      MONGODB_URL, options
     //PORT, options
   )
   .then(result => {
