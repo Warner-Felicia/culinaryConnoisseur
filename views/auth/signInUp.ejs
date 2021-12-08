@@ -34,6 +34,7 @@
         <input name="password" type="password" placeholder="Password" required/>
         <input name="securityPhrase" type="text" placeholder="Security Phrase" value="<% if (hasError) { %><%=user.securityPhrase %><% } %>" required/>
         <input name="passwordHint" type="text" placeholder="Security Phrase Hint" value="<% if (hasError) { %><%=user.passwordHint%><% } %>" required/>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button>Sign Up</button>
       </form>
     </div>

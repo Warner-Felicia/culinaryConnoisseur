@@ -50,7 +50,7 @@
           <% } %>
            <form action="/updateSecurityPhrase" method="post">
              <label for="securityPhrase" class="black-font">Security Phrase</label>
-             <input type="text" name="securityPhrase" id="securityPhrase" value="<%= users.securityPhrase %>" required>
+             <input type="text" name="securityPhrase" id="securityPhrase" required>
              <label for="phraseHint" class="black-font">Security Hint</label>
              <input type="text" name="phraseHint" id="phraseHint" value="<%= users.passwordHint %>" required>
              <input type="hidden" name="_csrf" value="<%= csrfToken %>">

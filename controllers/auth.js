@@ -47,6 +47,7 @@ exports.postSignUp = (req, res, next) => {
             }
         });
     }
+    console.log(email);
     if (User.findOne({
             email: email
         })) {
@@ -66,7 +67,9 @@ exports.postSignUp = (req, res, next) => {
     user.save()
         .then(result => {
             console.log('User created');
-            res.render('shop/home');
+            return res.status(422).render('shop/home',{
+                pageTitle: 'home'
+            });
         })
         .catch(err => console.log(err));
 
