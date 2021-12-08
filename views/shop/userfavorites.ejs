@@ -19,7 +19,7 @@
       <div class="grid">
         <% recipes.forEach(recipe => { %>
         <article class="card product-item">
-          <a href='/recipe/<%=recipe._id%>'>
+          <a class="card" href='/recipe/<%=recipe._id%>'>
             <header class="card__header">
               <h2 class="card_content"><%= recipe.title %></h2></header>
               <img src='<%= recipe.imageUrl %>' alt='<%= recipe.title%>'>
@@ -37,8 +37,9 @@
               <% } %>
             </a>
         </article>
+        <% }) %>
       </div>
-      <% }) %>
+      
       <% } else { %>
         <h1>You have no favorites.</h1>
         <% } %>
