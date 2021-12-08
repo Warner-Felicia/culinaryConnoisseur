@@ -86,23 +86,21 @@
             </div>
             <div class="form-control">
                 <label for="tags">Tags</label>
-                <% if (editing) {
-                  for (let i = 0; i < recipe.tags.length; i++) { %>
-                    <input 
-                        class="<%= validationErrors.find(e => e.param === 'tags') ? 'invalid' : 'tag' %>"
-                        type="text" 
-                        name="tag<%i%>" 
-                        id="tag<%i%>" 
-                        value="<% recipe.tags[i] %>">
-                        <% } %>
-                  <% } else {%>
-                <input 
+                <% if (editing) {%>
+                  <input 
+                    class="<%= validationErrors.find(e => e.param === 'tags') ? 'invalid' : 'tag' %>"
+                    type="text" 
+                    name="tags" 
+                    id="tags" 
+                    value="<% recipe.tags.join(', '); %>">
+                <% } else {%>
+                  <input 
                     class="<%= validationErrors.find(e => e.param === 'tags') ? 'invalid' : 'tag' %>"
                     type="text" 
                     name="tags" 
                     id="tags" 
                     value="">
-                    <% } %>
+                <% } %>
             </div>
             <% if (editing) { %>
                 <input type="hidden" value="<%= recipe._id %>" name="recipeId">
