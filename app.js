@@ -7,9 +7,9 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const csrf = require('csurf');
 
-const connectionString = process.env.DATABASE_CONNECTION_STRING;
+const MONGODB_URI = process.env.MONGODB_URL;
 
-const cors = require('cors') // Place this with other requires (like 'path' and 'express')
+const cors = require('cors');
 
 const app = express();
 const oneHour = 1000 * 60 * 60;
@@ -54,7 +54,7 @@ app.use('/500', errorController.get500);
 app.use(errorController.get404);
 
 const corsOptions = {
-    origin: "https://<your_app_name>.herokuapp.com/",
+    origin: "https://culinary-connoisseur.herokuapp.com/",
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
@@ -62,19 +62,19 @@ app.use(cors(corsOptions));
 const options = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
+    // useCreateIndex: true,
+    // useFindAndModify: false,
     family: 4
 };
 
-const PORT = process.env.MONGODB_URL || 5000;
+const PORT = MONGODB_URI || 5000;
                         
 mongoose
   .connect(
-    MONGODB_URL, options
+    PORT, options
   )
   .then(result => {
-    app.listen(PORT);
+    app.listen(5000);
   })
   .catch(err => {
     console.log(err);
