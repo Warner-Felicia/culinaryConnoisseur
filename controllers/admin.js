@@ -94,6 +94,7 @@ exports.postAddRecipe = (req, res, next) => {
   const userId = req.body.userId;
   const tagsArray = tags ? tags.split(', ') : undefined;
   if(!errors.isEmpty()) {
+    console.log(errors.array()[0].msg);
     return res.status(422).render('admin/edit-recipe', {
       title: 'Add a Recipe',
       path: '/admin/add-recipe',
@@ -139,6 +140,7 @@ exports.postAddRecipe = (req, res, next) => {
 };
 
 module.exports.postDeleteRecipe = (req, res, nex) => {
+  console.log('here');
   if (!req.session.isLoggedIn) {
     res.redirect('/signInUp');
   }
